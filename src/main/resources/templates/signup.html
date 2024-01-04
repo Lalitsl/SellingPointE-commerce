@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>sign-up page</title>
+</head>
+
+<body>
+	<section>
+		<!-- inner page section -->
+		<section class="inner_page_head">
+			<div class="container_fuild">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="full">
+							<h3>Welcome to customer Sign-Up page </h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end inner page section -->
+
+		<section class="why_section layout_padding">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
+
+						<form th:action="@{/submitCustomerSignup}" method="post" th:object="${obj}" id="customerForm">
+							<h5 class="text-center fw-bold my-3">Customer Registration Form </h5>
+							<input type="text" class="" placeholder="Enter your full name" name="customerName" />
+							<div class="error-message text-danger mb-2" id="nameError"></div>
+
+							<input type="email" placeholder="Enter your email address" name="email" />
+							<div class="error-message text-danger mb-2" id="emailError"></div>
+
+							<input type="tel" placeholder="Enter mobile number" name="mobile" />
+							<div class="error-message text-danger mb-2" id="mobileError"></div>
+
+							<input type="password" placeholder="Enter your password" name="password" />
+							<div class="error-message text-danger mb-2" id="passwordError"></div>
+
+							<input type="text" placeholder="Enter address" name="address" />
+							<div class="error-message text-danger mb-2" id="addressError"></div>
+
+							<p>Have allready an account ? <a th:href="@{/signin}" class="fw-bold">Sign-In</a></p>
+							<div class="text-center">
+								<button type="submit" class="btn btncolor mx-2">Submit</button>
+								<a th:href="@{/}" class="btn btncolor mx-2">Cencal</a>
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script>
+			document.getElementById('customerForm').addEventListener('submit', function (event) {
+				// Validation logic here
+				var isValid = true;
+				var name = document.getElementsByName('customerName')[0].value;
+				var email = document.getElementsByName('email')[0].value;
+				var mob = document.getElementsByName('mobile')[0].value;
+				var password = document.getElementsByName('password')[0].value;
+				var address = document.getElementsByName('address')[0].value;
+
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+				const mobileRegex = /^[789]\d{9}$/;
+
+				if (name === '') {
+					document.getElementById('nameError').innerHTML = 'Please enter your valid name !!! ';
+					isValid = false;
+				}
+				// Validate email
+				if (!emailRegex.test(email)) {
+					// Email is not in a valid format
+					document.getElementById('emailError').innerHTML = 'Invalid email format please try again !!! ';
+					isValid = false;
+				}
+				// Validate password
+				if (!passwordRegex.test(password)) {
+					// Password does not meet criteria
+					document.getElementById('passwordError').innerHTML = 'Password should contain at least 8 characters including one letter and one number !!! ';
+					isValid = false;
+				}
+				// Validate mobile number
+				if (!mobileRegex.test(mob)) {
+					// Mobile number does not meet the required format
+					document.getElementById('mobileError').innerHTML = 'Invalid mobile number format !!! ';
+					isValid = false;
+				}
+				// addredd validation 
+				if (address === '') {
+					document.getElementById('addressError').innerHTML = 'Please enter your valid address !!! ';
+					isValid = false;
+				}
+
+				if (!isValid) {
+					event.preventDefault(); // Prevent form submission if validation fails
+				} else {
+					// If the form is valid, you can submit it or perform other actions
+				}
+
+				// Automatically remove error messages after 5 seconds
+				setTimeout(function () {
+					var errorMessages = document.getElementsByClassName('error-message');
+					for (var i = 0; i < errorMessages.length; i++) {
+						errorMessages[i].innerHTML = '';
+					}
+				}, 5000);
+			});
+
+		</script>
+
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>sign-in page</title>
+</head>
+
+<body>
+	<section>
+		<!-- inner page section -->
+		<section class="inner_page_head">
+			<div class="container_fuild">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="full">
+							<h3>Welcome to customer Sign-In page </h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end inner page section -->
+
+		<section class="why_section layout_padding">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
+						<form action="##">
+							<h5 class="text-center fw-bold my-3">Customer Login Form </h5>
+							<input type="text" class="my-3" placeholder="Enter your full name" name="name" required />
+							<input type="email" class="my-3" placeholder="Enter your email address" name="email"
+								required />
+							<div class="my-3">
+								<a th:href="@{/signup}" class="fw-bold text-decoration-none">Register here </a>
+								<a th:href="@{/forgot}" class="fw-bold text-decoration-none"
+									style="float: right;">Forgot Password</a>
+
+							</div>
+							<div class="text-center my-3">
+								<button type="button" class="btn btncolor mx-2">Login</button>
+								<a th:href="@{/}" class="btn btncolor mx-2">Cencal</a>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</section>
+</body>
+
+</html>
