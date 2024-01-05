@@ -6,14 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class customer {
+public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int customerId;
 	private String customerName;
 	private String address;
-	/* private String type; */
+	private String type;
 	private String mobile;
 	private String email;
 	private String password;
@@ -36,6 +36,12 @@ public class customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public String getMobile() {
 		return mobile;
 	}
@@ -54,25 +60,31 @@ public class customer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public customer(int customerId, String customerName, String address, String type, String mobile, String email,
+	public Customer(int customerId, String customerName, String address, String type, String mobile, String email,
 			String password) {
 		super();
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.address = address;
+		this.type = type;
 		this.mobile = mobile;
 		this.email = email;
 		this.password = password;
 	}
-	public customer() {
+	
+	public Customer() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+	
 	@Override
 	public String toString() {
 		return "customer [customerId=" + customerId + ", customerName=" + customerName + ", address=" + address
-				+ ", mobile=" + mobile + ", email=" + email + ", password=" + password + "]";
+				+ ", type=" + type + ", mobile=" + mobile + ", email=" + email + ", password=" + password + "]";
 	}
+	
+
+	
+	
 	
 	
 	

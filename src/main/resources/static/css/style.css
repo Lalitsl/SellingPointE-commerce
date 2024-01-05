@@ -306,7 +306,7 @@ button.btn:focus {
 }
 
 .slider_section .detail-box h1 {
-	font-size: 4.5rem;
+	font-size: 3.5rem;
 	font-weight: bold;
 	margin-bottom: 15px;
 	color: #002c3e;
@@ -345,33 +345,6 @@ button.btn:focus {
 	width: 100%;
 }
 
-/*.slider_section .carousel-indicators {
-	visibility: hidden;
-	position: unset;
-	margin: 0;
-	margin-top: 45px;
-	-webkit-box-pack: start;
-	-ms-flex-pack: start;
-	justify-content: flex-start;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	align-items: center;
-}
-
-.slider_section .carousel-indicators li {
-	background-color: #ffffff;
-	width: 12px;
-	height: 12px;
-	border-radius: 100%;
-	opacity: 1;
-}
-
-.slider_section .carousel-indicators li.active {
-	width: 20px;
-	height: 20px;
-	background-color: #f7444e;
-}
-*/
 .slider_bg_box {
 	position: absolute;
 	top: 0;
@@ -1002,13 +975,14 @@ li.nav-item ul li a:focus {
 	background: #f7444e;
 	text-align: center;
 	color: #fff;
-	padding-top: 20px;
-	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 5px;
 }
 
 .inner_page_head h3 {
-	font-size: 32px;
-	font-weight: 800;
+	font-size: 18px;
+	font-weight: 600;
+	font-style: italic;
 }
 
 /** footer **/

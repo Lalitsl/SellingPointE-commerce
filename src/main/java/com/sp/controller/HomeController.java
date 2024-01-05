@@ -1,6 +1,7 @@
 package com.sp.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
 	
 	@GetMapping("/")
-	public String home() {
+	public String home(Model model) {
+		model.addAttribute("title", "Selling point home page");
+		model.addAttribute("hello", "welcome to home page ");
 		return "index";
 	}
 	
@@ -42,10 +45,6 @@ public class HomeController {
 		return "signin";
 	}
 	
-	@GetMapping("/admin")
-	public String admin() {
-		return "admin/home";
-	}
 	
 	
 	
