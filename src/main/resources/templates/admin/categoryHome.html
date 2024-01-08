@@ -8,28 +8,36 @@
 
 <body>
 	<section>
-		<div class="container-fluid p-5 text-center">
-			<h3>welcome to category home page................</h3>
-			<table class="table table-bordered table-striped">
+		<div class="container p-5">
+			
+			<a th:href="@{/addcategory}" class="btn blackbtn text-left my-2">Add Category</a>
+			<table class="table table-bordered table-striped text-center">
 				<thead>
 					<tr>
-						<th scope="col">S. No.</th>
-						<th scope="col">First</th>
-						<th scope="col">Last</th>
+						<th scope="col">Category Id</th>
+						<th scope="col">Category Name</th>
+						<th scope="col">Category Details</th>
 						<th scope="col">Operation</th>
-					</tr>       
+					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th>1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>
-							<a href="#"><i class="fa-solid fa-eye mx-2 text-success"></i></a>
-							<a href="#"><i class="fa-solid fa-pen-to-square mx-2"></i></a>
-							<a href="#"><i class="fa-solid fa-trash mx-2 text-danger"></i></a>
+					<tr th:each="c: ${FAC}">
+						<td th:text="${c.categoryid}"></td>
+						<td th:text="${c.categoryname}"></td>
+						<td th:text="${c.categorydetails}"></td>
+
+						<td class="d-flex">
+							<form th:action="@{'/user/updatecontact/'+${c.categoryid}}" method="post">
+								<button type="submit" style="border: none;"><i
+										class="fa-solid fa-pen-to-square fa-lg px-2"></i></button>
+							</form>
+
+							<a href="#" th:onclick="|deleteBox(${c.categoryid})|"><i
+									class="fa-solid fa-trash fa-lg px-2 text-danger"></i></a>
 						</td>
 					</tr>
+
+
 				</tbody>
 			</table>
 		</div>

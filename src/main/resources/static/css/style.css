@@ -10,6 +10,18 @@ body {
 	background-color: #ffffff;
 	overflow-x: hidden;
 }
+.redbtn{
+	background-color: #f7444e;
+	color: white;
+}
+.blackbtn{
+	background: #0c0c0c;
+	color: white;
+}
+.blackbtn:hover{
+	background: #f7444e;
+	color: white;
+}
 
 .layout_padding {
 	padding: 20px 0;

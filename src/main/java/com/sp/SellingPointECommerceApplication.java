@@ -10,6 +10,8 @@ public class SellingPointECommerceApplication {
 		SpringApplication.run(SellingPointECommerceApplication.class, args);
 		System.out.println("selling point e-commerce project started.....");
 		
-	}
+		
+	} 
 
 }
+
