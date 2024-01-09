@@ -8,9 +8,15 @@
 
 <body>
 	<section>
-		<div class="container p-5">
+		<div class="container p-2">
 			
-			<a th:href="@{/addcategory}" class="btn blackbtn text-left my-2">Add Category</a>
+			<div th:if="${session.message}" th:classappend="${'alert-'+session.message.type}" class="alert text-center" role="alert"
+				id="alertMessage">
+				<span th:text="${session.message.content}" class="fw-bold"></span>
+			</div>
+			
+			<a th:href="@{/admin/addcategory}" class="btn blackbtn text-left my-2">Add Category</a>
+			<a th:href="@{/admin/addcategory}" class="btn btn-danger text-end my-2" style="float: right;">Delete All Category</a>
 			<table class="table table-bordered table-striped text-center">
 				<thead>
 					<tr>
@@ -27,11 +33,12 @@
 						<td th:text="${c.categorydetails}"></td>
 
 						<td class="d-flex">
-							<form th:action="@{'/user/updatecontact/'+${c.categoryid}}" method="post">
+							<!--<form th:action="@{'/user/updatecontact/'+${c.categoryid}}" method="post">
 								<button type="submit" style="border: none;"><i
 										class="fa-solid fa-pen-to-square fa-lg px-2"></i></button>
-							</form>
-
+							</form>-->
+							<a th:href="@{/admin/updateCate/{id}(id=${c.categoryid})}"><i
+									class="fa-solid fa-pen-to-square fa-lg px-2"></i></a>
 							<a href="#" th:onclick="|deleteBox(${c.categoryid})|"><i
 									class="fa-solid fa-trash fa-lg px-2 text-danger"></i></a>
 						</td>
@@ -41,6 +48,40 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- delete alert box (sweet alert ) -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script>
+			function deleteBox(cid) {
+				Swal.fire({
+					title: "Are you sure?",
+					text: "You won't be delete this category !",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Yes, delete it!"
+				}).then((result) => {
+					if (result.isConfirmed) {
+						//						window.location = "/admin/category"+cid
+						window.location = "/admin/deleteCate/" + cid
+						Swal.fire({
+							title: "Deleted!",
+							text: "Your contact has been deleted.",
+							icon: "success"
+						});
+					}
+				});
+			}
+			
+			setTimeout(function () {
+				var alertMessage = document.getElementById('alertMessage');
+				if (alertMessage) {
+					alertMessage.style.display = 'none';
+				}
+			}, 2000);
+
+		</script>
+
 	</section>
 </body>
 

@@ -6,4 +6,6 @@ import com.sp.entities.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	
+
 }
+

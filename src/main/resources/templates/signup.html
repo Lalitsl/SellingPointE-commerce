@@ -27,7 +27,8 @@
 				<div class="row">
 					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
 
-						<form th:action="@{/submitCustomerSignup}" method="post" th:object="${obj}" id="customerForm">
+						<form th:action="@{/user/submitCustomerSignup}" method="post" th:object="${obj}"
+							id="customerForm">
 							<h5 class="text-center fw-bold my-3">Customer Registration Form </h5>
 							<input type="text" class="" placeholder="Enter your full name" name="customerName" />
 							<div class="error-message text-danger mb-2" id="nameError"></div>
@@ -101,8 +102,25 @@
 
 				if (!isValid) {
 					event.preventDefault(); // Prevent form submission if validation fails
+					Swal.fire({
+						icon: "error",
+						title: "Oops...",
+						text: "Input field can't be empty !!!",
+						showConfirmButton: false,
+						timer: 2000
+					});
+
 				} else {
 					// If the form is valid, you can submit it or perform other actions
+					// Here, form submission was successful, triggering SweetAlert for success
+					Swal.fire({
+						position: "top-end",
+						icon: "success",
+						title: "Data Saved Successfully ....",
+						showConfirmButton: true,
+						timer: 1500
+					});
+
 				}
 
 				// Automatically remove error messages after 5 seconds
@@ -113,8 +131,8 @@
 					}
 				}, 5000);
 			});
-
 		</script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	</section>
 </body>

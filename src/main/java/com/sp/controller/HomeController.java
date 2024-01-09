@@ -45,6 +45,10 @@ public class HomeController {
 		return "signin";
 	}
 	
+	@GetMapping("/404")
+	public String error() {
+		return "404";
+	}
 	
 	
 	

@@ -11,6 +11,7 @@ import com.sp.dao.CustomerRepository;
 import com.sp.entities.Customer;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
@@ -28,8 +29,7 @@ public class UserController {
 		customer.setType("user");
 		Customer save = this.customerRepository.save(customer);
 		System.out.println("data saved successfully "+save);
-		return "demo";
-		
+		return "signup";
 	}
 
 }

@@ -14,6 +14,10 @@ body {
 	background-color: #f7444e;
 	color: white;
 }
+.redbtn:hover{
+	background-color: #0c0c0c;
+	color: white;
+}
 .blackbtn{
 	background: #0c0c0c;
 	color: white;
