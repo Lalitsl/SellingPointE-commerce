@@ -1,11 +1,16 @@
 package com.sp.entities;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Category {
@@ -17,6 +22,10 @@ public class Category {
 	private String categoryname;
 	@Column(nullable = false)
 	private String categorydetails;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+	private List<Product> products=new ArrayList<>();
+
 	
 	
 	public Category(int categoryid, String categoryname, String categorydetails) {

@@ -30,6 +30,11 @@ public class CategoryService {
 		categoryRepository.deleteById(id);
 	}
 	
+//	delete all category
+	public void deleteAllCategory() {
+		categoryRepository.deleteAll();
+	}
+	
 //	update category 
 	public Optional<Category> getCategoryById(int id){
 		return categoryRepository.findById(id);

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>category page</title>
+	<title>product home page</title>
 </head>
 
 <body>
@@ -15,15 +15,19 @@
 				<span th:text="${session.message.content}" class="fw-bold"></span>
 			</div>
 
-			<a th:href="@{/admin/addcategory}" class="btn blackbtn text-left my-2">Add Category</a>
+			<a th:href="@{/admin/sendAddProductPage}" class="btn blackbtn text-left my-2">Add Product</a>
 			<a href="#" th:onclick="deleteallcategory()" class="btn btn-danger text-end my-2"
-				style="float: right;">Delete All Category</a>
+				style="float: right;">Delete All Product</a>
 			<table class="table table-bordered table-striped text-center">
 				<thead>
 					<tr>
-						<th scope="col">Category Id</th>
-						<th scope="col">Category Name</th>
-						<th scope="col">Category Details</th>
+						<th scope="col">product Id</th>
+						<th scope="col">product Name</th>
+						<th scope="col">product Details</th>
+						<th scope="col">product Id</th>
+						<th scope="col">product Name</th>
+						<th scope="col">product Details</th>
+						<th scope="col">Operation</th>
 						<th scope="col">Operation</th>
 					</tr>
 				</thead>

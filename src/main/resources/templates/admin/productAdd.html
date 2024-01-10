@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="admin/base::layout1(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Add product page</title>
+</head>
+
+<body>
+	<section>
+		<div class="container p-3">
+			<div class="col-md-4 offset-4 shadow-lg p-3">
+				<form action="#" th:action="@{/admin/addProduct}" method="POST" th:object="${pro}" enctype="multipart/form-data">
+					<h5 class="text-center fw-bold my-3">Product Form</h5>
+
+					<div th:if="${session.message}" th:classappend="${'alert-'+session.message.type}" class="alert"
+						role="alert" id="alertMessage">
+						<span th:text="${session.message.content}" class="fw-bold"></span>
+					</div>
+					<input type="text" name="productId" th:field="*{productId}" />
+					<input type="text" class="" placeholder="Enter Product Name" name="productName"
+						th:field="*{productName}" />
+					<input type="text" class="" placeholder="Enter Product description" name="productDescription"
+						th:field="*{productDescription}" />
+					
+					<select class="form-select mt-1 mb-4 p-2" aria-label="Default select example"
+						name="cate.categoryid">
+						<option>Select product category</option>
+						<option th:each="cate : ${category}" th:value="${cate.categoryid}"
+							th:text="${cate.categoryname}"></option>
+					</select>
+
+					<input type="number" class="" placeholder="Enter Product price" name="productPrice"
+						th:field="*{productPrice}" />
+					<input type="number" class="" placeholder="Enter Product stock" name="stock" th:field="*{stock}" />
+
+					<input type="file" class="" name="productImage" th:field="*{productImage}" />
+					<input type="hidden" name="proImage" />
+
+					<div class="text-center">
+						<button type="submit" class="btn btncolor mx-2">Add Product</button>
+						<a th:href="@{/admin/productHome}" class="btn redbtn mx-2">Back</a>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+		<script th:inline="javascript">
+			setTimeout(function () {
+				var alertMessage = document.getElementById('alertMessage');
+				if (alertMessage) {
+					alertMessage.style.display = 'none';
+				}
+			}, 2000);
+		</script>
+	</section>
+</body>
+
+</html>
