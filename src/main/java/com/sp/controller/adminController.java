@@ -1,17 +1,21 @@
 package com.sp.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.sp.dao.CategoryRepository;
+import com.sp.dto.ProductDTO;
 import com.sp.entities.Category;
 import com.sp.entities.Product;
 import com.sp.helper.Message;
 import com.sp.service.CategoryService;
 import com.sp.service.ProductService;
 import org.springframework.util.StringUtils;
-
 
 import jakarta.servlet.http.HttpSession;
 
@@ -45,10 +50,8 @@ public class adminController {
 	private ProductService productService;
 
 //	image directory
-	public String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/upload";
+	public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/upload";
 
-	
-	
 //	Admin home handler
 	@GetMapping("")
 	public String admin(Model model) {
@@ -182,51 +185,154 @@ public class adminController {
 //	redirect request to add product page
 	@GetMapping("/sendAddProductPage")
 	public String sendProductPage(Model model) {
-		model.addAttribute("pro", new Product());
+		model.addAttribute("productDto", new ProductDTO());
 		model.addAttribute("category", categoryService.getAllCategory());
 		return "admin/productAdd";
 	}
 
 //	add product handler
-	@PostMapping("/addProduct")
-	public String addProduct(Product pro, 
-			@RequestParam("productImage") MultipartFile file, 
-			@RequestParam("proImage") String proImage) throws IOException {
-		
-		System.out.println(pro.getProductName());
-		System.out.println(pro.getProductPrice());
-		System.out.println(pro.getProductImage());
-		Product product=new Product();
-		product.setProductName(pro.getProductName());
-		product.setProductDescription(pro.getProductDescription());
-		product.setProductId(pro.getProductId());
-		product.setProductPrice(pro.getProductPrice());
-		product.setStock(pro.getStock());
-		product.setCategory(categoryService.getCategoryById(pro.getCategory().getCategoryid()).get());
-		
-		String imageUUID;
-		if(!file.isEmpty()) {
-			imageUUID=file.getOriginalFilename();
-			Path FileNameAndPath = Paths.get(uploadDir,imageUUID);
-			Files.write(FileNameAndPath, file.getBytes());
-		}else {
-			imageUUID=proImage;
+/*	@PostMapping("/addProduct")
+	public String addProduct(@ModelAttribute("productDto") ProductDTO productDto,
+			@RequestParam("proImage") String proImage, HttpSession session, Model model) throws IOException {
+		// @RequestParam("productImage") MultipartFile file,
+		try {
+			Product product = new Product();
+			product.setProductName(productDto.getProductName());
+			product.setProductDescription(productDto.getProductDescription());
+			product.setProductId(productDto.getProductId());
+			product.setProductPrice(productDto.getProductPrice());
+			product.setStock(productDto.getStock());
+			product.setCategory(categoryService.getCategoryById(productDto.getCategoryid()).get());
+			String imageUUID;
+
+			if (!productDto.getProductImage().isEmpty()) {
+				MultipartFile file = productDto.getProductImage();
+				imageUUID = file.getOriginalFilename();
+				Path FileNameAndPath = Paths.get(uploadDir, imageUUID);
+				Files.write(FileNameAndPath, file.getBytes());
+			} else {
+				imageUUID = proImage;
+				System.out.println("else block for image upload");
+			}
+			product.setProductImage(imageUUID);
+			productService.addProduct(product);
+			session.setAttribute("message", new Message("Product saved successfully .....", "success"));
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					session.removeAttribute("message");
+					timer.cancel(); // Cancel the timer after removing the message
+				}
+			}, 3000);
+			return "redirect:/admin/productHome";
+
+		} catch (Exception e) {
+			System.out.println("something is wrong .........");
+			return "404";
 		}
-		product.setProductImage(imageUUID);
-		productService.addProduct(product);
-		return "redirect:/admin/productHome";
-		
-		
-		
+
 	}
+
+//	if(!file.isEmpty()) {
+//	imageUUID=file.getOriginalFilename();
+//	Path FileNameAndPath = Paths.get(uploadDir,imageUUID);
+//	Files.write(FileNameAndPath, file.getBytes());
+//	System.out.println("if block ");
+//}else {
+//	imageUUID=proImage;
+//	System.out.println("else block ");
+//}
+
+	*/
+	
+// =========================================================================
+	
+	@PostMapping("/addProduct")
+	public String processContactForm(@ModelAttribute ProductDTO productDTO, 
+			@RequestParam("productImage") MultipartFile file,@RequestParam("proImage") String proImage,
+			Principal principal, HttpSession session) throws IOException {
+		Product product = new Product();
+		product.setProductName(productDTO.getProductName());
+		product.setProductDescription(productDTO.getProductDescription());
+		product.setProductId(productDTO.getProductId());
+		product.setProductPrice(productDTO.getProductPrice());
+		product.setStock(productDTO.getStock());
+		product.setCategory(categoryService.getCategoryById(productDTO.getCategoryid()).get());
+		// String imageUUID;
+		if (!productDTO.getProductImage().isEmpty()) {
+			product.setProductImage(file.getOriginalFilename());
+			File saveFile = new ClassPathResource("static/images/upload").getFile();
+			Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			System.out.println("image is uploaded successfully ");
+		} else {
+			// imageUUID = proImage;
+			product.setProductImage(proImage);
+			System.out.println("else block for image upload");
+			System.out.println("IMAGE IS EMPTY ");
+		}
+		productService.addProduct(product);
+		session.setAttribute("message", new Message("Product saved successfully .....", "success"));
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				session.removeAttribute("message");
+				timer.cancel(); // Cancel the timer after removing the message
+			}
+		}, 3000);
+		return "redirect:/admin/productHome";
+
+
+	}
+
+
+	
+// ====================================================================
+
 	
 	
 	
-//	================= product module start here ========================
 	
-	
-	
-	
-	
+//	delete product handler
+	@GetMapping("/deleteProduct/{productid}")
+	public String deleteProduct(@PathVariable("productid") int productid, HttpSession session, Model model) {
+		try {
+			this.productService.deleteProductById(productid);
+			session.setAttribute("message", new Message("Product deleted successfully", "success"));
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					session.removeAttribute("message");
+					timer.cancel(); // Cancel the timer after removing the message
+				}
+			}, 3000);
+			return "redirect:/admin/productHome";
+		} catch (Exception e) {
+			System.out.println("something went wrong in delete handler");
+		}
+		return "404";
+	}
+
+//	update product handler
+	@GetMapping("/updateProduct/{id}")
+	public String updateProduct(@PathVariable int id, Model model) {
+		Product product = this.productService.getProductById(id).get();
+		ProductDTO productdto = new ProductDTO();
+		productdto.setProductId(product.getProductId());
+		productdto.setProductName(product.getProductName());
+		productdto.setProductDescription(product.getProductDescription());
+		productdto.setProductPrice(product.getProductPrice());
+		productdto.setStock(product.getStock());
+		productdto.setCategoryid(product.getCategory().getCategoryid());
+		//productdto.setProductImage(product.getProductImage());
+		model.addAttribute("category", categoryService.getAllCategory());
+		model.addAttribute("productDto", productdto);
+		return "admin/productAdd";
+	}
+
+//	================= product module end here ========================
 
 }
