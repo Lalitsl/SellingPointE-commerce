@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sp.dao.ProductRepository;
@@ -21,13 +23,11 @@ public class ProductService {
 	}
 	
 //	get all product 
-	public List<Product> getAllProduct(){
-		return productRepository.findAll();
-		
-	}
+	 public Page<Product> getAllProduct(Pageable pageable) {
+	        return productRepository.findAll(pageable);
+	    }
 
 //	update product 
-	
 	public Optional<Product> getProductById(int id){
 		return productRepository.findById(id);
 	}
@@ -46,9 +46,6 @@ public class ProductService {
 	public List<Product> getAllProductsByCategoryId(int categoryId){
 	    return productRepository.findAllByCategory_Categoryid(categoryId);
 	}
-
-	
-	
 	
 
 }

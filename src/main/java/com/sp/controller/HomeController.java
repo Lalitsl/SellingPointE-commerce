@@ -1,12 +1,25 @@
 package com.sp.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.sp.entities.Category;
+import com.sp.service.CategoryService;
+import com.sp.service.ProductService;
+
 @Controller
 public class HomeController {
+	
+	@Autowired
+	CategoryService categoryService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping("/")
 	public String home(Model model) {
@@ -21,7 +34,9 @@ public class HomeController {
 	}
 	
 	@GetMapping("/product")
-	public String products() {
+	public String products(Model model) {
+		List<Category> allCategory = this.categoryService.getAllCategory();
+		model.addAttribute("category", allCategory);
 		return "product";
 	}
 	

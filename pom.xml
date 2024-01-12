@@ -67,6 +67,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+
 		<!--	<dependency>
 			<groupId>com.jwt</groupId>
 			<artifactId>JWT-Authentication</artifactId>

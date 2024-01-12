@@ -21,6 +21,31 @@
 			</div>
 		</section>
 		<!-- end inner page section -->
+
+
+		<!-- category get from database start here -->
+		<ul class="list-group w-25">
+			<h5 class="list-group-item">All Products </h5>
+			<a href="#" th:each="cate:${category}">
+				<li class="list-group-item" th:text="${cate.categoryname}">
+					<a>hello</a>
+				</li>
+			</a>
+		</ul>
+
+		<div class="dropdown" th:each="cate:${category}">
+			<button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1"
+				data-bs-toggle="dropdown" aria-expanded="false" th:text="${cate.categoryname}">Dropdown button
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				<li><a class="dropdown-item" href="#">Action</a></li>
+				<li><a class="dropdown-item" href="#">Another action</a></li>
+				<li><a class="dropdown-item" href="#">Something else here</a></li>
+			</ul>
+		</div>
+		<!-- category get from database start here -->
+
+
 		<!-- product section -->
 		<section class="product_section layout_padding">
 			<div class="container">

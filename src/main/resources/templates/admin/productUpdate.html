@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="admin/base::layout1(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Update product page</title>
+</head>
+
+<body>
+	<section>
+		<div class="container p-3">
+			<div class="col-md-4 offset-4 shadow-lg p-3">
+				<form action="#" th:action="@{/admin/updateProduct}" method="POST" th:object="${product}"
+					enctype="multipart/form-data">
+					<h5 class="text-center fw-bold my-3">Update Product Details</h5>
+
+					<div th:if="${session.message}" th:classappend="${'alert-'+session.message.type}" class="alert"
+						role="alert" id="alertMessage">
+						<span th:text="${session.message.content}" class="fw-bold"></span>
+					</div>
+					<input type="hidden" name="productId" th:value="${product.productId}" />
+					<input type="text" name="productName" th:value="${product.productName}" />
+					<input type="text" name="productDescription" th:value="${product.productDescription}" />
+					<input type="text" name="productCompanyName" th:value="${product.productCompanyName}" />
+					<select class="form-select mt-1 mb-4 p-2" aria-label="Default select example" name="categoryid"
+						style="border-radius: 0%;" required
+						oninvalid="this.setCustomValidity('Please select a product category')"
+						oninput="this.setCustomValidity('')">
+						<option value="" disabled selected>Select product category</option>
+						<option th:each="cate : ${category}" th:value="${cate.categoryid}"
+							th:text="${cate.categoryname}"></option>
+					</select>
+					<input type="number" name="productPrice" th:value="${product.productPrice}" />
+					<input type="number" name="stock" th:value="${product.stock}" />
+					<input type="file" name="productImage" id="productImageInput" />
+					<div class="text-center my-2">
+						<img id="previewImage" th:src="@{'/images/upload/'+${product.productImage}}" class="w-25">
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btncolor mx-2">Update Product</button>
+						<a th:href="@{/admin/productHome/0}" class="btn redbtn mx-2">Back</a>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+
+		<script th:inline="javascript">
+			setTimeout(function () {
+				var alertMessage = document.getElementById('alertMessage');
+				if (alertMessage) {
+					alertMessage.style.display = 'none';
+				}
+			}, 2000);
+		</script>
+	</section>
+</body>
+
+</html>

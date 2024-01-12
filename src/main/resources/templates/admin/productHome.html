@@ -8,7 +8,7 @@
 
 <body>
 	<section>
-		<div class="container p-2">
+		<div class="container-fluid pb-4">
 
 			<div th:if="${session.message}" th:classappend="${'alert-'+session.message.type}" class="alert text-center"
 				role="alert" id="alertMessage">
@@ -25,6 +25,7 @@
 						<th scope="col">product Name</th>
 						<th scope="col">product category</th>
 						<th scope="col">product Details</th>
+						<th scope="col">product Company Name</th>
 						<th scope="col">Product Price</th>
 						<th scope="col">Product Stock</th>
 						<th scope="col">Product Image</th>
@@ -37,23 +38,49 @@
 						<td th:text="${p.productName}"></td>
 						<td th:text="${p.category.categoryname}"></td>
 						<td th:text="${p.productDescription}"></td>
+						<td th:text="${p.productCompanyName}"></td>
 						<td th:text="${p.productPrice}"></td>
 						<td th:text="${p.stock}"></td>
 						<td>
 							<img class="w-25" th:src="@{${'/images/upload/'+p.productImage}}">
 						</td>
 						<td class="d-flex">
-							<a th:href="@{/admin/updateProduct/{id}(id=${p.productId})}"><i
+							<a th:href="@{/admin/sendUpdateProductPage/{id}(id=${p.productId})}"><i
 									class="fa-solid fa-pen-to-square fa-lg px-2"></i></a>
 							<a href="#" th:onclick="|deleteBox(${p.productId})|"><i
 									class="fa-solid fa-trash fa-lg px-2 text-danger"></i></a>
 						</td>
 					</tr>
-
-
-
 				</tbody>
 			</table>
+			<!--  pagination part start here -->
+
+			<nav aria-label="Page navigation example" style="float:right;">
+				<ul class="pagination">
+
+					<li th:if="${currentPage != 0}" class="page-item fw-bold">
+						<a class="page-link" th:href="@{'/admin/productHome/'+${currentPage-1}}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+
+					<li th:each="i: ${#numbers.sequence(1,totalPage)}"
+						th:classappend="${currentPage==i-1} ? 'active':' ' " class="page-item fw-bold">
+						<a th:href="@{'/admin/productHome/'+${i-1}}" class="page-link" href="#">
+							<span th:text="${i}"></span>
+						</a>
+					</li>
+
+					<li th:if="${currentPage+1 != totalPage}" class="page-item fw-bold">
+						<a class="page-link" th:href="@{'/admin/productHome/'+${currentPage+1}}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+
+			<!--  pagination part end here -->
 		</div>
 		<!-- delete alert box (sweet alert ) -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -98,7 +125,7 @@
 					confirmButtonText: "Yes, delete it!"
 				}).then((result) => {
 					if (result.isConfirmed) {
-						window.location = "/admin/deleteAllCate"
+						window.location = "/admin/deleteAllProduct"
 						Swal.fire({
 							title: "Deleted!",
 							text: "Your all category has been deleted.",
