@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="full">
-							<h3>Product Grid</h3>
+							<h3> All Products </h3>
 						</div>
 					</div>
 				</div>
@@ -24,7 +24,7 @@
 
 
 		<!-- category get from database start here -->
-		<ul class="list-group w-25">
+		<!--	<ul class="list-group w-25">
 			<h5 class="list-group-item">All Products </h5>
 			<a href="#" th:each="cate:${category}">
 				<li class="list-group-item" th:text="${cate.categoryname}">
@@ -33,27 +33,26 @@
 			</a>
 		</ul>
 
-		<div class="dropdown" th:each="cate:${category}">
-			<button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1"
+		<div class="dropdown Side-Drop" th:each="cate : ${category}">
+			<a href="#" class="dropdown-toggle" id="dropdownMenuButton1"
 				data-bs-toggle="dropdown" aria-expanded="false" th:text="${cate.categoryname}">Dropdown button
-			</button>
+			</a><hr>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
+				<li th:each="pro : ${productsByCategoryId[cate.categoryid]}">
+					<a class="dropdown-item" th:href="@{/some-url/{proId}(proId=${pro.productId})}"
+						th:text="${pro.productName}"></a>
+				</li>
 			</ul>
 		</div>
+		-->
+
 		<!-- category get from database start here -->
 
 
 		<!-- product section -->
 		<section class="product_section layout_padding">
 			<div class="container">
-				<div class="heading_container heading_center">
-					<h2>
-						Our <span>products</span>
-					</h2>
-				</div>
+
 				<div class="row">
 					<div class="col-sm-6 col-md-4 col-lg-3">
 						<div class="box">
