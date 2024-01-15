@@ -47,6 +47,7 @@ public class ProductService {
 	    return productRepository.findAllByCategory_Categoryid(categoryId);
 	}
 	
+	
 
 }
 

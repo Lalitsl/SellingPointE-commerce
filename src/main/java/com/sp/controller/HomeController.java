@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sp.dao.CustomerRepository;
+import com.sp.dao.RoleRepository;
 import com.sp.entities.Category;
+import com.sp.entities.Customer;
 import com.sp.entities.Product;
 import com.sp.service.CategoryService;
 import com.sp.service.ProductService;
@@ -28,6 +33,12 @@ public class HomeController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	private CustomerRepository customerRepository;
+	@Autowired
+	private RoleRepository roleRepository;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	
 	@GetMapping("/")
@@ -93,6 +104,15 @@ public class HomeController {
 		return "contact";
 	}
 	
+	
+	
+	@GetMapping("/404")
+	public String error() {
+		return "404";
+	}
+	
+	
+	
 	@GetMapping("/signup")
 	public String signup() {
 		return "signup";
@@ -103,16 +123,21 @@ public class HomeController {
 		return "signin";
 	}
 	
-	@GetMapping("/404")
-	public String error() {
-		return "404";
+//	customer registration handler 
+	@PostMapping("/submitCustomerSignup")
+	public String submitCustomerSignup(Model model, @ModelAttribute("customer") Customer customer ) {
+
+//		customer.setCustomerName(customer.getCustomerName());
+//		customer.setEmail(customer.getEmail());
+//		customer.setMobile(customer.getMobile());
+//		customer.setPassword(customer.getPassword());
+//		customer.setAddress(customer.getAddress());
+//		// customer.setType("user");
+//		Customer save = this.customerRepository.save(customer);
+//		System.out.println("data saved successfully "+save);
+		
+		return "signup";
 	}
-	
-	@GetMapping("/cart")
-	public String cart() {
-		return "cart";
-	}
-	
 	
 	
 
