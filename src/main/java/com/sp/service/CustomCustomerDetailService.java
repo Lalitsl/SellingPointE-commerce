@@ -20,9 +20,11 @@ public class CustomCustomerDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		fetching User-name from database 
 		Optional<Customer> customer = customerRepository.findCustomerByEmail(username);
 		customer.orElseThrow(()-> new UsernameNotFoundException("USER NOT FOUND !!! "));
 		return customer.map(CustomCustomerDetail::new).get();
+		
 	}
 	
 	

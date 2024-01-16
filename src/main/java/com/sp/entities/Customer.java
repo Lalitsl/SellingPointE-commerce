@@ -42,6 +42,8 @@ public class Customer {
 			)
 	private List<Role> roles;
 	
+//	private List<Role> roles;
+	
 	private String password;
 
 	public Customer(Customer customer) {

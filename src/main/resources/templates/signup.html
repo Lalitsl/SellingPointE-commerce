@@ -26,8 +26,12 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
+						<div th:if="${session.message}" th:classappend="${'alert-'+session.message.type}"
+							class="alert text-center" role="alert" id="alertMessage">
+							<span th:text="${session.message.content}" class="fw-bold"></span>
+						</div>
 
-						<form th:action="@{/user/submitCustomerSignup}" method="post" th:object="${obj}"
+						<form th:action="@{/submitCustomerSignup}" method="post" th:object="${customer}"
 							id="customerForm">
 							<h5 class="text-center fw-bold my-3">Customer Registration Form </h5>
 							<input type="text" class="" placeholder="Enter your full name" name="customerName" />

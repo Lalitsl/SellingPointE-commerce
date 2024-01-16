@@ -27,10 +27,20 @@
 				<div class="row">
 
 					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
-						<form action="##">
-							<h5 class="text-center fw-bold mt-5 ">Customer Login Form </h5>
-							<input type="text" class="my-3" placeholder="Enter your full name" name="name" required />
-							<input type="email" class="my-3" placeholder="Enter your email address" name="email"
+						<div th:if="${param.error}" class="alert alert-danger">
+							Invalid username and password
+						</div>
+						<div th:if="${param.logout}" class="alert alert-success">
+							Logged out successfully
+						</div>
+						<div th:if="${param.change}" class="alert alert-success">
+							<p th:text="${param.change}"></p>
+						</div>
+
+						<form th:action="@{/signin}" method="post">
+							<h5 class="text-center fw-bold mt-3 ">Login Form </h5>
+							<input type="email" class="my-3" placeholder="Enter your user name" name="email" required />
+							<input type="password" class="my-3" placeholder="Enter your password" name="password"
 								required />
 							<div class="my-3">
 								<a th:href="@{/signup}" class="fw-bold text-decoration-none">Register here </a>
@@ -39,7 +49,7 @@
 
 							</div>
 							<div class="text-center my-3">
-								<button type="button" class="btn btncolor mx-2">Login</button>
+								<button type="submit" class="btn btncolor mx-2">Login</button>
 								<a th:href="@{/}" class="btn btncolor mx-2">Cancel</a>
 							</div>
 							<div class="text-center">

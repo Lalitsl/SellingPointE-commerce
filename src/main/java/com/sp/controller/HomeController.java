@@ -3,8 +3,11 @@ package com.sp.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +22,12 @@ import com.sp.dao.RoleRepository;
 import com.sp.entities.Category;
 import com.sp.entities.Customer;
 import com.sp.entities.Product;
+import com.sp.helper.Message;
 import com.sp.service.CategoryService;
 import com.sp.service.ProductService;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -104,41 +109,40 @@ public class HomeController {
 		return "contact";
 	}
 	
-	
-	
 	@GetMapping("/404")
 	public String error() {
 		return "404";
 	}
-	
-	
 	
 	@GetMapping("/signup")
 	public String signup() {
 		return "signup";
 	}
 	
+//	customer registration handler 
+	@PostMapping("/submitCustomerSignup")
+	public String submitCustomerSignup(@ModelAttribute("customer") Customer customer ,HttpSession session) {
+		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+		Customer save = customerRepository.save(customer);
+		session.setAttribute("message", new Message("User saved successfully .....", "success"));
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+			@Override
+			public void run() {
+				session.removeAttribute("message");
+				timer.cancel(); // Cancel the timer after removing the message
+			}
+		}, 3000);
+		System.out.println("data saved successfully");
+		
+		return "signin";
+	}
+	
+	
 	@GetMapping("/signin")
 	public String signin() {
 		return "signin";
 	}
-	
-//	customer registration handler 
-	@PostMapping("/submitCustomerSignup")
-	public String submitCustomerSignup(Model model, @ModelAttribute("customer") Customer customer ) {
-
-//		customer.setCustomerName(customer.getCustomerName());
-//		customer.setEmail(customer.getEmail());
-//		customer.setMobile(customer.getMobile());
-//		customer.setPassword(customer.getPassword());
-//		customer.setAddress(customer.getAddress());
-//		// customer.setType("user");
-//		Customer save = this.customerRepository.save(customer);
-//		System.out.println("data saved successfully "+save);
-		
-		return "signup";
-	}
-	
-	
+	 
 
 }
