@@ -33,16 +33,8 @@ public class Customer {
 	private String email;
 	private String address;
 	private String mobile;
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(
-			name="user_role",
-			joinColumns ={@JoinColumn(name="CUSTOMER_ID", referencedColumnName="customerId")},
-        	inverseJoinColumns= {@JoinColumn(name="ROLE_ID", referencedColumnName="roleId")}
-  
-			)
-	private List<Role> roles;
-	
-//	private List<Role> roles;
+
+	private String roles;
 	
 	private String password;
 

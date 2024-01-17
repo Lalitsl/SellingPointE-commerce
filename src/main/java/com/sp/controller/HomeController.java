@@ -7,18 +7,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sp.dao.CustomerRepository;
-import com.sp.dao.RoleRepository;
+
 import com.sp.entities.Category;
 import com.sp.entities.Customer;
 import com.sp.entities.Product;
@@ -40,11 +37,6 @@ public class HomeController {
 	
 	@Autowired
 	private CustomerRepository customerRepository;
-	@Autowired
-	private RoleRepository roleRepository;
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
 	
 	@GetMapping("/")
 	public String home(Model model) {
@@ -122,7 +114,6 @@ public class HomeController {
 //	customer registration handler 
 	@PostMapping("/submitCustomerSignup")
 	public String submitCustomerSignup(@ModelAttribute("customer") Customer customer ,HttpSession session) {
-		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
 		Customer save = customerRepository.save(customer);
 		session.setAttribute("message", new Message("User saved successfully .....", "success"));
 		Timer timer = new Timer();
