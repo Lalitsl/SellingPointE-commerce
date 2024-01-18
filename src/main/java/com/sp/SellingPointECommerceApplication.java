@@ -8,7 +8,7 @@ public class SellingPointECommerceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SellingPointECommerceApplication.class, args);
-		System.out.println("selling point e-commerce project started.....");
+		System.out.println("Selling point E-commerce project started .....");
 		
 		
 	} 

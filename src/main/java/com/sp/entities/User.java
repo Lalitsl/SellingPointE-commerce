@@ -1,7 +1,5 @@
 package com.sp.entities;
 
-
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import jakarta.persistence.Column;
@@ -9,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
@@ -27,11 +26,11 @@ public class User {
 	private String email;
 	private String address;
 	private String mobile;
-
-	private String roles;
-	
 	private String password;
-
+	
+	@ManyToOne
+	private Role roles;
+	
 //	public User(User user) {
 //		this.userId = user.getUserId();
 //		this.userName=user.getUserName();
@@ -47,12 +46,6 @@ public class User {
 	}
 	
 
-	
-
-	
-	
-	
-	
-	
-
 }
+
+

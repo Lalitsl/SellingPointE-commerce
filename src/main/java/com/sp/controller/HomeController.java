@@ -71,8 +71,6 @@ public class HomeController {
 	    return "product";
 	}
 
-	
-
     @PostConstruct
     public void init() {
         System.out.println("Initialization method called on application startup");
