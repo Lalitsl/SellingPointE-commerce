@@ -31,10 +31,10 @@
 							<span th:text="${session.message.content}" class="fw-bold"></span>
 						</div>
 
-						<form th:action="@{/submitCustomerSignup}" method="post" th:object="${customer}"
+						<form th:action="@{/submitUserSignup}" method="post" th:object="${user}"
 							id="customerForm">
 							<h5 class="text-center fw-bold my-3">Customer Registration Form </h5>
-							<input type="text" class="" placeholder="Enter your full name" name="customerName" />
+							<input type="text" class="" placeholder="Enter your full name" name="userName" />
 							<div class="error-message text-danger mb-2" id="nameError"></div>
 
 							<input type="email" placeholder="Enter your email address" name="email" />

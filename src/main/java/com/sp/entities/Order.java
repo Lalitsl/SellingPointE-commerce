@@ -11,7 +11,7 @@ public class Order {
 	private int quantity;
 	
 //	foreign key
-	private Customer customer;
+	private User customer;
 	private Product product;
 	
 	

@@ -3,8 +3,6 @@ package com.sp.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sp.dao.CustomerRepository;
+import com.sp.dao.UserRepository;
 
 import com.sp.entities.Category;
-import com.sp.entities.Customer;
+import com.sp.entities.User;
 import com.sp.entities.Product;
 import com.sp.helper.Message;
 import com.sp.service.CategoryService;
@@ -36,7 +34,7 @@ public class HomeController {
 	ProductService productService;
 	
 	@Autowired
-	private CustomerRepository customerRepository;
+	private UserRepository userRepository;
 	
 	@GetMapping("/")
 	public String home(Model model) {
@@ -112,18 +110,10 @@ public class HomeController {
 	}
 	
 //	customer registration handler 
-	@PostMapping("/submitCustomerSignup")
-	public String submitCustomerSignup(@ModelAttribute("customer") Customer customer ,HttpSession session) {
-		Customer save = customerRepository.save(customer);
+	@PostMapping("/submitUserSignup")
+	public String submitCustomerSignup(@ModelAttribute("user") User user ,HttpSession session) {
+		User save = userRepository.save(user);
 		session.setAttribute("message", new Message("User saved successfully .....", "success"));
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask(){
-			@Override
-			public void run() {
-				session.removeAttribute("message");
-				timer.cancel(); // Cancel the timer after removing the message
-			}
-		}, 3000);
 		System.out.println("data saved successfully");
 		
 		return "signin";
