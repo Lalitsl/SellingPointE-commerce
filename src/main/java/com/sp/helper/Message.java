@@ -1,5 +1,7 @@
 package com.sp.helper;
 
+import org.springframework.web.context.request.RequestContextHolder;
+
 public class Message {
 	
 	private String content;
@@ -32,6 +34,5 @@ public class Message {
 	}
 	
 	
-
 
 }

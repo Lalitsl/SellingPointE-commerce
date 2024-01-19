@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="full">
-							<h3>Welcome to customer Sign-Up page </h3>
+							<h3>Welcome to user Sign-Up page </h3>
 						</div>
 					</div>
 				</div>
@@ -32,8 +32,8 @@
 						</div>
 
 						<form th:action="@{/submitUserSignup}" method="post" th:object="${user}"
-							id="customerForm">
-							<h5 class="text-center fw-bold my-3">Customer Registration Form </h5>
+							id="userForm">
+							<h5 class="text-center fw-bold my-3">User Registration Form </h5>
 							<input type="text" class="" placeholder="Enter your full name" name="userName" />
 							<div class="error-message text-danger mb-2" id="nameError"></div>
 
@@ -51,7 +51,7 @@
 
 							<p>Have allready an account ? <a th:href="@{/signin}" class="fw-bold">Sign-In</a></p>
 							<div class="text-center">
-								<button type="submit" class="btn btncolor mx-2">Submit</button>
+								<button type="submit" class="btn redbtn mx-2">Submit</button>
 								<a th:href="@{/}" class="btn btncolor mx-2">Cancel</a>
 							</div>
 
@@ -63,10 +63,10 @@
 		</section>
 
 		<script>
-			document.getElementById('customerForm').addEventListener('submit', function (event) {
+			document.getElementById('userForm').addEventListener('submit', function (event) {
 				// Validation logic here
 				var isValid = true;
-				var name = document.getElementsByName('customerName')[0].value;
+				var name = document.getElementsByName('userName')[0].value;
 				var email = document.getElementsByName('email')[0].value;
 				var mob = document.getElementsByName('mobile')[0].value;
 				var password = document.getElementsByName('password')[0].value;
@@ -122,7 +122,7 @@
 						icon: "success",
 						title: "Data Saved Successfully ....",
 						showConfirmButton: true,
-						timer: 1500
+						
 					});
 
 				}
