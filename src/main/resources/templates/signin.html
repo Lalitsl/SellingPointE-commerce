@@ -28,7 +28,7 @@
 
 					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
 						<div th:if="${param.error}" class="alert alert-danger">
-							Invalid username and password
+							[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
 						</div>
 						<div th:if="${param.logout}" class="alert alert-success">
 							Logged out successfully
@@ -36,10 +36,11 @@
 						<div th:if="${param.change}" class="alert alert-success">
 							<p th:text="${param.change}"></p>
 						</div>
+						
 
-						<form method="post" th:action="@{/login}">
+						<form method="post" th:action="@{/userlogin}">
 							<h5 class="text-center fw-bold mt-3 ">Login Form </h5>
-							<input type="email" class="my-3" placeholder="Enter your user name" name="email" required />
+							<input type="email" class="my-3" placeholder="Enter your user name" name="username" required />
 							<input type="password" class="my-3" placeholder="Enter your password" name="password"
 								required />
 							<div class="my-3">

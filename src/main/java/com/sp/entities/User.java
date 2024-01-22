@@ -28,8 +28,10 @@ public class User {
 	private String mobile;
 	private String password;
 	
-	@ManyToOne
-	private Role roles;
+	private String role;
+	
+//	@ManyToOne
+//	private Role roles;
 	
 //	public User(User user) {
 //		this.userId = user.getUserId();

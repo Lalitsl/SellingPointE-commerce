@@ -53,10 +53,10 @@
 							</div>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+							<a class="nav-link mx-2" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/product}">Products</a>
+							<a class="nav-link mx-2" th:href="@{/product}">Products</a>
 						</li>
 
 						<li class="nav-item">
@@ -121,24 +121,32 @@
 							</a>
 						</li>
 
-						<div class="btn-group" role="group" aria-label="Basic example">
-							<a th:href="@{/signup}" type="button" class="btn text-light"
-								style="background:#f7444e ;">Signup</a>
-							<a th:href="@{/signin}" type="button" class="btn text-light"
-								style="background:#000000;">Login</a>
+						<!-- Check if the user is authenticated -->
+						<div th:if="${#authorization.expression('isAuthenticated()')}">
+							<div class="dropdown">
+								<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle redbtn p-2 m-5"
+									id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+									th:text="${user.userName.substring(0, 1).toUpperCase()}" style="border-radius: 50%;">
+								</a>
+
+								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1">
+									<li><a class="dropdown-item fw-bold" href="#">My Profile</a></li><hr>
+									<li><a class="dropdown-item fw-bold" href="#">Profile</a></li><hr>
+									<li><a type="button" class="dropdown-item redbtn fw-bold" th:href="@{/logout}"
+											>Logout</a></li>
+								</ul>
+							</div>
 						</div>
 
-						<!--<div class="btn-group" role="group" aria-label="Basic example" th:if="${!loggedIn}">
-							<a th:href="@{/signup}" type="button" class="btn text-light"
-								style="background:#f7444e;">Signup</a>
-							<a th:href="@{/signin}" type="button" class="btn text-light"
-								style="background:#000000;">Login</a>
+						<!-- Check if the user is not authenticated (not logged in) -->
+						<div th:if="${not #authorization.expression('isAuthenticated')}">
+							<div class="btn-group" role="group" aria-label="Basic example">
+								<a th:href="@{/signup}" type="button" class="btn text-light"
+									style="background:#f7444e;">Signup</a>
+								<a th:href="@{/signin}" type="button" class="btn text-light"
+									style="background:#000000;">Login</a>
+							</div>
 						</div>
-
-						<li class="nav-item" th:if="${loggedIn}">
-							<a class="nav-link" href="##"><i class="fa-solid fa-circle-user fa-xl"></i></a>
-						</li>-->
-
 
 					</ul>
 				</div>
@@ -181,11 +189,12 @@
 			</ul>
 		</div>
 		<hr>
-		
+
 		<div class="dropdown Side-Drop" th:each="cate : ${category}">
-			<a href="#" class="dropdown-toggle" id="dropdownMenuButton1"
-				data-bs-toggle="dropdown" aria-expanded="false" th:text="${cate.categoryname}">Dropdown button
-			</a><hr>
+			<a href="#" class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+				th:text="${cate.categoryname}">Dropdown button
+			</a>
+			<hr>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 				<li th:each="pro : ${productsByCategoryId[cate.categoryid]}">
 					<a class="dropdown-item" th:href="@{/some-url/{proId}(proId=${pro.productId})}"
@@ -193,9 +202,9 @@
 				</li>
 			</ul>
 		</div>
-		
-		
-</div>
+
+
+	</div>
 
 
 
@@ -277,19 +286,23 @@
 										</fieldset>
 									</form>
 								</div>
-								
+
 								<div>
 									<a href="https://web.whatsapp.com/" class="px-2">
-										<img src="https://img.freepik.com/premium-vector/whatsapp-icon-3d-rendering_578229-154.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais" style="width:40px;">
+										<img src="https://img.freepik.com/premium-vector/whatsapp-icon-3d-rendering_578229-154.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais"
+											style="width:40px;">
 									</a>
 									<a href="https://www.linkedin.com/login" class="px-2">
-										<img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" style="width:30px;">
+										<img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png"
+											style="width:30px;">
 									</a>
 									<a href="https://web.telegram.org/k/" class="px-2">
-										<img src="https://assets.stickpng.com/images/5842a8fba6515b1e0ad75b03.png" style="width:30px;">
+										<img src="https://assets.stickpng.com/images/5842a8fba6515b1e0ad75b03.png"
+											style="width:30px;">
 									</a>
 									<a href="https://www.instagram.com/accounts/login/?hl=en" class="px-2">
-										<img src="https://img.freepik.com/premium-vector/instagram-app-icon-social-media-logo-vector-illustration_277909-403.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais" style="width:30px;">
+										<img src="https://img.freepik.com/premium-vector/instagram-app-icon-social-media-logo-vector-illustration_277909-403.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais"
+											style="width:30px;">
 									</a>
 								</div>
 							</div>

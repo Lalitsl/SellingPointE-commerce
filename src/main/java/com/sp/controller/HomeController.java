@@ -1,16 +1,20 @@
 package com.sp.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.sp.dao.UserRepository;
 import com.sp.entities.Category;
 import com.sp.entities.User;
 import com.sp.entities.Product;
@@ -28,11 +32,18 @@ public class HomeController {
 
 	@Autowired
 	CategoryService categoryService;
-
 	@Autowired
 	ProductService productService;
 	@Autowired
+	UserRepository userRepository;
+	@Autowired
 	UserService userService;
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	
+	
+	
 
 //	 Handler For home page 
 	@GetMapping("/")
@@ -75,6 +86,7 @@ public class HomeController {
 	public void init() {
 		ModelAndView model = new ModelAndView();
 		this.base(model);
+		
 	}
 
 	@GetMapping("/base")
@@ -83,6 +95,17 @@ public class HomeController {
 		model.addObject("category", allCategory);
 		model.setViewName("base");
 		return model;
+	}
+	
+	@ModelAttribute
+	public void commonUser(Principal p, Model m) {
+		if(p != null) {
+			String email = p.getName();
+			User user = userRepository.findUserByEmail(email).get();
+			m.addAttribute("user", user);
+			System.out.println("EMAIL : "+user.getEmail());
+			System.out.println("USERNAME : "+user.getUserName());
+		}
 	}
 
 //	 Handler For blog page 
@@ -108,32 +131,42 @@ public class HomeController {
 	public String signup() {
 		return "signup";
 	}
-
+	
 //	Handler For user registration process 
 	@PostMapping("/submitUserSignup")
 	public String submitUserSignup(@ModelAttribute("user") User user, HttpSession session) {
 		try {
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+			user.setRole("ROLE_USER");
 			User u = userService.addUser(user);
 			if (u != null) {
 				session.setAttribute("message", new Message("User saved successfully .....", "success"));
-				session.removeAttribute("message");
 				System.out.println("data saved successfully");
-				return "redirect:/signin";
+				return "redirect:/signup";
 			} else {
 				session.setAttribute("message", new Message("something wrong .....", "danger"));
 				System.out.println("data not saved !!! ");
 				return "redirect:/signup";
 			}
 		} catch (Exception e) {
+			session.setAttribute("message", new Message("Something went wrong .....", "danger"));
+			System.out.println("Exception in catch block !!! ");
 			return "redirect:/signup";
 		}
 	}
+
+
 
 //	 Handler For redirect to sign-in page 
 	@GetMapping("/signin")
 	public String signin() {
 		return "signin";
 	}
+
+
+
+ 
+	
 
 	
 	

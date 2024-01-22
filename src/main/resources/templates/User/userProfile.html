@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>testimonial page</title>
+</head>
+
+<body>
+	<section>
+		
+		<section class="inner_page_head">
+			<div class="container_fuild">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="full">
+							<h3>user profile page</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<h5 th:text="${user.email}"></h5>
+			<h5 th:text="${user.userName}"></h5>
+		</section>
+
+	</section>
+
+</body>
+
+</html>
