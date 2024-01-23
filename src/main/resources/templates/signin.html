@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="full">
-							<h3>Welcome to customer Sign-In page </h3>
+							<h3>Welcome to Sign-In page </h3>
 						</div>
 					</div>
 				</div>
@@ -27,16 +27,27 @@
 				<div class="row">
 
 					<div class="col-lg-4 offset-lg-4 shadow-lg p-4">
-						<div th:if="${param.error}" class="alert alert-danger">
+						<div th:if="${param.error}" class="alert alert-danger" id="error-message">
 							[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
 						</div>
-						<div th:if="${param.logout}" class="alert alert-success">
+						<div th:if="${param.logout}" class="alert alert-success" id="error-message">
 							Logged out successfully
 						</div>
 						<div th:if="${param.change}" class="alert alert-success">
 							<p th:text="${param.change}"></p>
 						</div>
-						
+						<script th:if="${param.error}">
+						        // Remove the error message after 5 seconds
+						        setTimeout(function() {
+						            document.getElementById('error-message').style.display = 'none';
+						        }, 2000); // 5000 milliseconds = 5 seconds
+						</script>
+						<script th:if="${param.logout}">
+						        // Remove the error message after 5 seconds
+						        setTimeout(function() {
+						            document.getElementById('error-message').style.display = 'none';
+						        }, 2000); // 5000 milliseconds = 5 seconds
+						</script>
 
 						<form method="post" th:action="@{/userlogin}">
 							<h5 class="text-center fw-bold mt-3 ">Login Form </h5>

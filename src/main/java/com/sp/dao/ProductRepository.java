@@ -10,5 +10,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 //	search product according to particular category for user section
 	List<Product> findAllByCategory_Categoryid(int categoryId);
-	
+
+	List<Product> findAllByProductNameContaining(String productName);
+
 }

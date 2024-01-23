@@ -40,17 +40,19 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav">
 						<li>
-							<div id="nav_search_input" class="input-group">
-								<input class="form-control border-end-0 border" type="search" value=""
-									id="example-search-input" placeholder="search product">
-								<span class="input-group-append">
-									<button
-										class="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5"
-										type="button">
-										<i class="fa fa-search"></i>
-									</button>
-								</span>
-							</div>
+							<form class="pt-2" th:action="@{/searchProduct}">
+								<div id="nav_search_input" class="input-group">
+									<input class="form-control border-end-0 border" type="search" name="productName"
+										id="example-search-input" placeholder="search product">
+									<span class="input-group-append">
+										<button
+											class="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5"
+											type="submit">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
+							</form>
 						</li>
 						<li class="nav-item active">
 							<a class="nav-link mx-2" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
@@ -123,24 +125,26 @@
 
 						<!-- Check if the user is authenticated -->
 						<div th:if="${#authorization.expression('isAuthenticated()')}">
-							<div class="dropdown">
+							<div class="dropdown mt-2">
 								<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle redbtn p-2 m-5"
 									id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-									th:text="${user.userName.substring(0, 1).toUpperCase()}" style="border-radius: 50%;">
+									th:text="${user.email.substring(0, 1).toUpperCase()}" style="border-radius: 50%;">
 								</a>
-
-								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1">
-									<li><a class="dropdown-item fw-bold" href="#">My Profile</a></li><hr>
-									<li><a class="dropdown-item fw-bold" href="#">Profile</a></li><hr>
-									<li><a type="button" class="dropdown-item redbtn fw-bold" th:href="@{/logout}"
-											>Logout</a></li>
+								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1"
+									style="transform: translateX(-50px);">
+									<li><a class="dropdown-item fw-bold" href="#">My-Profile</a></li>
+									<hr>
+									<li><a class="dropdown-item fw-bold" th:href="@{/user/changeUserPassword}">Change-Password</a></li>
+									<hr>
+									<li><a type="button" class="dropdown-item redbtn fw-bold"
+											th:href="@{/logout}">Logout</a></li>
 								</ul>
 							</div>
 						</div>
 
 						<!-- Check if the user is not authenticated (not logged in) -->
 						<div th:if="${not #authorization.expression('isAuthenticated')}">
-							<div class="btn-group" role="group" aria-label="Basic example">
+							<div class="btn-group mt-2" role="group" aria-label="Basic example">
 								<a th:href="@{/signup}" type="button" class="btn text-light"
 									style="background:#f7444e;">Signup</a>
 								<a th:href="@{/signin}" type="button" class="btn text-light"
@@ -161,36 +165,8 @@
 
 		<span class="crossBtn showmenu" onclick="toggleSidebar()">&times;</span>
 		<hr>
-		<div class="dropdown Side-Drop">
-			<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle" id="dropdownMenuButton1"
-				data-bs-toggle="dropdown" aria-expanded="false">
-				Fashion
-			</a>
-			<ul class="dropdown-menu shadow-lg" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">Men's Wear</a></li>
-				<hr>
-				<li><a class="dropdown-item" href="#">Women's Wear</a></li>
-				<hr>
-				<li><a class="dropdown-item" href="#">Kid's Wear</a></li>
-			</ul>
-		</div>
-		<hr>
-		<div class="dropdown Side-Drop">
-			<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle" id="dropdownMenuButton1"
-				data-bs-toggle="dropdown" aria-expanded="false">
-				Electronics
-			</a>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="dropdown-item" href="#">Mobile</a></li>
-				<hr>
-				<li><a class="dropdown-item" href="#">Laptop</a></li>
-				<hr>
-				<li><a class="dropdown-item" href="#">T.V.</a></li>
-			</ul>
-		</div>
-		<hr>
 
-		<div class="dropdown Side-Drop" th:each="cate : ${category}">
+		<!--<div class="dropdown Side-Drop" th:each="cate : ${category}">
 			<a href="#" class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
 				th:text="${cate.categoryname}">Dropdown button
 			</a>
@@ -201,6 +177,12 @@
 						th:text="${pro.productName}"></a>
 				</li>
 			</ul>
+		</div>-->
+
+		<div class="Side-Drop" th:each="cate : ${category}">
+			<a th:href="@{/showAllProductByCategoryId/{id}(id=${cate.categoryid})}" class=""
+				th:text="${cate.categoryname}"></a>
+			<hr>
 		</div>
 
 
@@ -249,22 +231,19 @@
 											<li><a href="#">Testimonial</a></li>
 											<li><a th:href="@{/blog}">Blog</a></li>
 											<li><a th:href="@{/contact}">Contact</a></li>
-											<li><a href="#">Login</a></li>
-											<li><a href="#">Register</a></li>
+											<li><a th:href="@{/signin}">Login</a></li>
+											<li><a th:href="@{/signup}">Register</a></li>
 										</ul>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="widget_menu">
 										<h3>Category</h3>
-										<ul>
-											<li><a href="#">Fashion</a></li>
-											<li><a href="#">Electronics</a></li>
-											<li><a href="#">Shopping</a></li>
-											<li><a href="#">Grocery</a></li>
-											<li><a href="#">Appliances</a></li>
-											<li><a href="#">Beauty</a></li>
-											<li><a href="#">Other</a></li>
+										<ul th:each="cate : ${category}">
+											<li>
+												<a th:href="@{/showAllProductByCategoryId/{id}(id=${cate.categoryid})}"
+													class="" th:text="${cate.categoryname}"></a>
+											</li>
 										</ul>
 									</div>
 								</div>

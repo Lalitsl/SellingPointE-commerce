@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>000</title>
+</head>
+
+<body>
+	<section>
+		<!-- inner page section -->
+		<section class="inner_page_head">
+			<div class="container_fuild">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="full">
+							<h3 th:text="${{category01.categoryname}+' Products'}">  </h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end inner page section -->
+
+
+
+	
+
+
+		<!-- product section -->
+		<section class="product_section layout_padding">
+			<div class="container-fluid">
+				<div class="row">
+					<div th:each="prod:${allProducts}" class="col-sm-6 col-md-4 col-lg-3">
+						<div class="box">
+							<div class="option_container">
+								<div class="options">
+									<a href="" class="option1">Add To Cart</a>
+									<a href="" class="option2">Buy Now</a>
+								</div>
+							</div>
+							<div class="img-box">
+								<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
+							</div>
+							<div class="detail-box">
+								<h5 th:text="${prod.productName}"></h5>
+								<h6 th:text="${prod.productPrice}"></h6>
+							</div>
+							<p class="pt-2" th:text="${prod.productDescription}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end product section -->
+
+
+	</section>
+</body>
+
+</html>

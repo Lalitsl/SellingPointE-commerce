@@ -380,4 +380,23 @@ public class adminController {
 
 //	================= product module end here ========================
 
+	
+	
+//	================= Ad-min profile start here ========================
+	
+	@GetMapping("/adminProfile")
+	public String adminProfile() {
+		
+		return "admin/adminProfile";
+	}
+	
+	
+	
+//	================= Ad-min profile end here ========================
+	
+	
+	
+	
+	
+	
 }

@@ -22,9 +22,13 @@ public class ProductService {
 		productRepository.save(product);
 	}
 	
-//	get all product 
+//	get all product with pagination
 	 public Page<Product> getAllProduct(Pageable pageable) {
 	        return productRepository.findAll(pageable);
+	    }
+//	get all product 
+	 public List<Product> getAllProduct() {
+	        return productRepository.findAll();
 	    }
 
 //	update product 
@@ -47,6 +51,11 @@ public class ProductService {
 	    return productRepository.findAllByCategory_Categoryid(categoryId);
 	}
 	
+//	get all product by search product name 
+	public List<Product> getAllProductByProductName(String productName) {
+		return productRepository.findAllByProductNameContaining(productName);
+		
+	}
 	
 
 }

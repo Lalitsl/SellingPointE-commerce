@@ -39,46 +39,48 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav">
-						<!--<li>
-							<div id="nav_search_input" class="input-group">
-								<input class="form-control border-end-0 border" type="search" value=""
-									id="example-search-input" placeholder="search product">
-								<span class="input-group-append">
-									<button
-										class="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5"
-										type="button">
-										<i class="fa fa-search"></i>
-									</button>
-								</span>
-							</div>
-						</li>-->
+						<li>
+							<form class="pt-2" th:action="@{/searchProduct}">
+								<div id="nav_search_input" class="input-group">
+									<input class="form-control border-end-0 border" type="search" name="productName"
+										id="example-search-input" placeholder="search product">
+									<span class="input-group-append">
+										<button
+											class="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5"
+											type="submit">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
+							</form>
+						</li>
 						<li class="nav-item active">
 							<a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="##">Search</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">Report</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Charts</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link" th:href="@{/product}">Products</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/product}">Extra1</a>
+						<li>
+							<div class="dropdown mt-2">
+								<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle m-5"
+									id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i
+										class="fa-solid fa-circle-user fa-xl" style="color:#f7444e;"></i>
+								</a>
+								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1"
+									style="transform: translateX(-50px);">
+									<li><a class="dropdown-item fw-bold" href="#">My-Profile</a></li>
+									<hr>
+									<li><a class="dropdown-item fw-bold"
+											th:href="@{/user/changeUserPassword}">Change-Password</a></li>
+									<hr>
+									<li><a type="button" class="dropdown-item redbtn fw-bold"
+											th:href="@{/logout}">Logout</a></li>
+								</ul>
+							</div>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/product}">Extra2</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="##"><i class="fa-solid fa-circle-user fa-xl"></i></a>
-						</li>
-
-						<a th:href="@{/logout}" type="button" class="btn text-light" style="background:#f7444e ;">Logout</a>
-
 					</ul>
 				</div>
 			</nav>
@@ -90,7 +92,8 @@
 
 	<div class="sidebar mt-2 bg-light">
 
-		<span class="crossBtn showmenu" onclick="toggleSidebar()">&times;</span><hr>
+		<span class="crossBtn showmenu" onclick="toggleSidebar()">&times;</span>
+		<hr>
 		<li style="list-style: none;"><a class="" th:href="@{/admin}">Admin Dashboard</a></li>
 		<hr>
 		<div class="dropdown Side-Drop">
@@ -153,7 +156,8 @@
 				<div class="col-md-4">
 					<div class="full">
 						<div class="logo_footer">
-							<a th:href="@{/}"><img class="w-25" th:src="@{/images/final_logo1.png}" alt="footer logo" /></a>
+							<a th:href="@{/}"><img class="w-25" th:src="@{/images/final_logo1.png}"
+									alt="footer logo" /></a>
 						</div>
 						<div class="information_f">
 							<p><strong>ADDRESS:</strong> 463-A Pacific Business Center, Narmadapuram Rd,
@@ -176,8 +180,8 @@
 											<li><a href="#">Testimonial</a></li>
 											<li><a th:href="@{/blog}">Blog</a></li>
 											<li><a th:href="@{/contact}">Contact</a></li>
-											<li><a href="#">Login</a></li>
-											<li><a href="#">Register</a></li>
+											<li><a th:href="@{/signin}">Login</a></li>
+											<li><a th:href="@{/signup}">Register</a></li>
 										</ul>
 									</div>
 								</div>
@@ -213,22 +217,26 @@
 										</fieldset>
 									</form>
 								</div>
-								
+
 								<div>
 									<a href="https://web.whatsapp.com/" class="px-2">
-										<img src="https://img.freepik.com/premium-vector/whatsapp-icon-3d-rendering_578229-154.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais" style="width:40px;">
+										<img src="https://img.freepik.com/premium-vector/whatsapp-icon-3d-rendering_578229-154.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais"
+											style="width:40px;">
 									</a>
 									<a href="https://www.linkedin.com/login" class="px-2">
-										<img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png" style="width:30px;">
+										<img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/circle-linkedin-512.png"
+											style="width:30px;">
 									</a>
 									<a href="https://web.telegram.org/k/" class="px-2">
-										<img src="https://assets.stickpng.com/images/5842a8fba6515b1e0ad75b03.png" style="width:30px;">
+										<img src="https://assets.stickpng.com/images/5842a8fba6515b1e0ad75b03.png"
+											style="width:30px;">
 									</a>
 									<a href="https://www.instagram.com/accounts/login/?hl=en" class="px-2">
-										<img src="https://img.freepik.com/premium-vector/instagram-app-icon-social-media-logo-vector-illustration_277909-403.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais" style="width:30px;">
+										<img src="https://img.freepik.com/premium-vector/instagram-app-icon-social-media-logo-vector-illustration_277909-403.jpg?size=338&ext=jpg&ga=GA1.1.1412446893.1705104000&semt=ais"
+											style="width:30px;">
 									</a>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
