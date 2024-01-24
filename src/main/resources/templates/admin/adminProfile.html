@@ -19,26 +19,24 @@
 							<th scope="col">Mobile Number</th>
 							<th scope="col">Address</th>
 							<th scope="col">Role</th>
+							<th scope="col">Operation</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>Mark</td>
-							<td>Otto</td>
-							<td>@mdo</td>
-							<td>@mdo</td>
-							<td>Mark</td>
-							<td>Otto</td>
+							<td th:text="${user.userId}"></td>
+							<td th:text="${user.userName}"></td>
+							<td th:text="${user.email}"></td>
+							<td th:text="${user.mobile}"></td>
+							<td th:text="${user.address}"></td>
+							<td th:text="${user.role}"></td>
+							<td class="d-flex">
+								<a th:href="@{/admin/sendUpdateAdminProfile/{id}(id=${user.userId})}"><i
+										class="fa-solid fa-pen-to-square fa-lg px-2"></i></a>
+								<a href="#" th:onclick="|deleteBox(${user.userId})|"><i
+										class="fa-solid fa-trash fa-lg px-2 text-danger"></i></a>
+							</td>
 						</tr>
-						<tr>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-							<td>@mdo</td>
-							<td>Mark</td>
-							<td>Otto</td>
-						</tr>
-						
 					</tbody>
 				</table>
 			</div>

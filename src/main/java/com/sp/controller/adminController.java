@@ -29,14 +29,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sp.dao.CategoryRepository;
+import com.sp.dao.UserRepository;
 import com.sp.dto.ProductDTO;
 import com.sp.entities.Category;
 import com.sp.entities.Product;
+import com.sp.entities.User;
 import com.sp.helper.Message;
 import com.sp.service.CategoryService;
 import com.sp.service.ProductService;
-import org.springframework.util.StringUtils;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -47,9 +47,10 @@ public class adminController {
 
 	@Autowired
 	private CategoryService categoryService;
-
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	UserRepository userRepository;
 
 //	image directory
 	public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/upload";
@@ -380,23 +381,29 @@ public class adminController {
 
 //	================= product module end here ========================
 
-	
-	
 //	================= Ad-min profile start here ========================
-	
+
 	@GetMapping("/adminProfile")
-	public String adminProfile() {
-		
+	public String adminProfile(Principal p, Model m) {
+		String email = p.getName();
+		User user = userRepository.findUserByEmail(email).get();
+		m.addAttribute("user", user);
 		return "admin/adminProfile";
 	}
-	
-	
-	
+
+//	update ad-min profile 
+	@GetMapping("/sendUpdateAdminProfile/{id}")
+	public String sendUpdateAdminProfile(@PathVariable("id") int id, Model model, HttpSession session) {
+		Optional<User> updateUserById = this.userRepository.findById(id);
+		if (updateUserById.isPresent()) {
+			model.addAttribute("user", updateUserById.get());
+			return "/signup";
+		} else {
+			return "404";
+		}
+
+	}
+
 //	================= Ad-min profile end here ========================
-	
-	
-	
-	
-	
-	
+
 }

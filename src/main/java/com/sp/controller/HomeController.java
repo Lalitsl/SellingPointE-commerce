@@ -174,22 +174,24 @@ public class HomeController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
+		model.addAttribute("user", new User());
 		return "signup";
 	}
 	
 //	Handler For user registration process 
 	@PostMapping("/submitUserSignup")
-	public String submitUserSignup(@ModelAttribute("user") User user, HttpSession session) {
+	public String submitUserSignup(@ModelAttribute("user") User user, HttpSession session,Model model) {
 		try {
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			user.setUserName(bCryptPasswordEncoder.encode(user.getUserName()));
-			user.setAddress(bCryptPasswordEncoder.encode(user.getAddress()));
-			user.setMobile(bCryptPasswordEncoder.encode(user.getMobile()));
+//			user.setUserName(bCryptPasswordEncoder.encode(user.getUserName()));
+//			user.setAddress(bCryptPasswordEncoder.encode(user.getAddress()));
+//			user.setMobile(bCryptPasswordEncoder.encode(user.getMobile()));
 			user.setRole("ROLE_USER");
 			User u = userService.addUser(user);
 			if (u != null) {
 				session.setAttribute("message", new Message("User saved successfully .....", "success"));
 				System.out.println("data saved successfully");
+				System.out.println("EXCEPTION HERE ............");
 				return "redirect:/signup";
 			} else {
 				session.setAttribute("message", new Message("something wrong .....", "danger"));
@@ -207,7 +209,7 @@ public class HomeController {
 
 //	 Handler For redirect to sign-in page 
 	@GetMapping("/signin")
-	public String signin(Model model) {
+	public String signin(Model model,HttpSession session) {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);

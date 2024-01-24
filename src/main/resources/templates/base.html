@@ -126,15 +126,17 @@
 						<!-- Check if the user is authenticated -->
 						<div th:if="${#authorization.expression('isAuthenticated()')}">
 							<div class="dropdown mt-2">
-								<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle redbtn p-2 m-5"
+								<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle p-2 m-5"
 									id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-									th:text="${user.email.substring(0, 1).toUpperCase()}" style="border-radius: 50%;">
-								</a>
+									style="border-radius: 50%;"><i class="fa-solid fa-circle-user fa-2xl"
+										style="color:#f7444e;"></i></a>
+								<!--th:text="${user.email.substring(0, 1).toUpperCase()}"-->
 								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1"
 									style="transform: translateX(-50px);">
 									<li><a class="dropdown-item fw-bold" href="#">My-Profile</a></li>
 									<hr>
-									<li><a class="dropdown-item fw-bold" th:href="@{/user/changeUserPassword}">Change-Password</a></li>
+									<li><a class="dropdown-item fw-bold"
+											th:href="@{/user/changeUserPassword}">Change-Password</a></li>
 									<hr>
 									<li><a type="button" class="dropdown-item redbtn fw-bold"
 											th:href="@{/logout}">Logout</a></li>

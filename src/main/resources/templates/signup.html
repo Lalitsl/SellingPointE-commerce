@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="full">
-							<h3>Welcome to user Sign-Up page </h3>
+							<h3>Welcome to Sign-Up page </h3>
 						</div>
 					</div>
 				</div>
@@ -35,20 +35,21 @@
 
 						<form th:action="@{/submitUserSignup}" method="post" th:object="${user}"
 							id="userForm">
-							<h5 class="text-center fw-bold my-3">User Registration Form </h5>
-							<input type="text" class="" placeholder="Enter your full name" name="userName" />
+							<h5 class="text-center fw-bold my-3">User Form </h5>
+							<input type="hidden" name="userId" th:field="*{userId}" />
+							<input type="text" class="" placeholder="Enter your full name" name="userName" th:field="*{userName}"/>
 							<div class="error-message text-danger mb-2" id="nameError"></div>
 
-							<input type="email" placeholder="Enter your email address" name="email" />
+							<input type="email" placeholder="Enter your email address" name="email" th:field="*{email}"/>
 							<div class="error-message text-danger mb-2" id="emailError"></div>
 
-							<input type="tel" placeholder="Enter mobile number" name="mobile" />
+							<input type="tel" placeholder="Enter mobile number" name="mobile" th:field="*{mobile}"/>
 							<div class="error-message text-danger mb-2" id="mobileError"></div>
 
-							<input type="password" placeholder="Enter your password" name="password" />
+							<input type="password" placeholder="Enter your password" name="password" th:field="*{password}"/>
 							<div class="error-message text-danger mb-2" id="passwordError"></div>
 
-							<input type="text" placeholder="Enter address" name="address" />
+							<input type="text" placeholder="Enter address" name="address" th:field="*{address}"/>
 							<div class="error-message text-danger mb-2" id="addressError"></div>
 
 							<p>Have allready an account ? <a th:href="@{/signin}" class="fw-bold">Sign-In</a></p>
