@@ -45,7 +45,6 @@
 			</ul>
 		</div>
 		-->
-
 		<!-- category get from database start here -->
 
 
@@ -64,15 +63,15 @@
 					<div class="carousel-inner">
 						<div class="carousel-item active">
 							<img src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/7009dc0a7dab3d91.jpg?q=80"
-								class="d-block w-100" alt="...">
+								class="d-block w-100" alt="carousel 1st image">
 						</div>
 						<div class="carousel-item">
 							<img src="https://rukminim2.flixcart.com/fk-p-flap/3200/540/image/8c21b4c93944a503.jpg?q=60"
-								class="d-block w-100" alt="...">
+								class="d-block w-100" alt="carousel 2nd image">
 						</div>
 						<div class="carousel-item">
 							<img src="https://rukminim2.flixcart.com/fk-p-flap/3200/540/image/cf48be669a897c51.jpeg?q=60"
-								class="d-block w-100" alt="...">
+								class="d-block w-100" alt="carousel 3rd image">
 						</div>
 
 					</div>
@@ -89,23 +88,26 @@
 				</div>
 				<div class="row">
 					<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3">
-						<div class="box">
-							<div class="option_container">
-								<div class="options">
-									<a href="" class="option1">Add To Cart</a>
-									<a href="" class="option2">Buy Now</a>
-								</div>
-							</div>
-							<div class="img-box">
-								<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
-							</div>
-							<div class="detail-box">
-								<h5 th:text="${prod.productName}">T.V.</h5>
-								<h6 th:text="${prod.productPrice}">$75</h6>
-							</div>
-							<p class="pt-2" th:text="${prod.productDescription}"></p>
-							
-						</div>
+					    <div class="box">
+					        <div class="option_container">
+					            <div class="options">
+					                <a th:if="${prod.stock > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}" class="option1">Add To Cart</a>
+					                <a th:if="${prod.stock == 0}" class="option1" style="pointer-events: none;">Out of Stock</a>
+					                <a th:href="@{/cart/cartHomePage}" class="option2">Buy Now</a>
+					            </div>
+					        </div>
+					        <div class="img-box">
+					            <img th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image">
+					        </div>
+					        <div class="detail-box">
+					            <h5 th:text="${prod.productName}">T.V.</h5>
+					            <h6 th:text="${prod.productPrice}">$75</h6>
+					        </div>
+					        <p class="pt-2" th:text="${prod.productDescription}"></p>
+					        <p th:if="${prod.stock == 0}" class="text-danger fw-bold">Product Out of Stock</p>
+					        <p th:if="${prod.stock > 0 && prod.stock < 10}" class="fw-bold text-warning">Hurry up! Limited stock available</p>
+					        <p>Product Stock: <span class="pt-2" th:text="${prod.stock}"></span></p>
+					    </div>
 					</div>
 				</div>
 			</div>

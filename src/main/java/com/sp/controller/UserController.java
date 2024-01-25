@@ -31,17 +31,7 @@ public class UserController {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-//	Handler for user cart 
-	@GetMapping("/cart")
-	public String cart(Principal p , Model m) {
-		String email = p.getName();
-		User user = userRepository.findUserByEmail(email).get();
-		m.addAttribute("user", user);
-//		get side-bar drop-down all category from database
-		List<Category> allCategory = this.categoryService.getAllCategory();
-		m.addAttribute("category", allCategory);
-		return "/User/cart";
-	}
+
 	
 //	Handler for redirect to base after user login
 	@GetMapping("/showUser")

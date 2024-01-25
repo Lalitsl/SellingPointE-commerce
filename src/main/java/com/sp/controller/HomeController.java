@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sp.dao.UserRepository;
 import com.sp.entities.Category;
 import com.sp.entities.User;
+import com.sp.global.GlobalData;
 import com.sp.entities.Product;
 import com.sp.helper.Message;
 import com.sp.helper.RemoveSession;
@@ -55,6 +56,8 @@ public class HomeController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
+//		cart 
+		model.addAttribute("cartCount", GlobalData.cart.size());
 		return "index";
 	}
 
@@ -213,6 +216,8 @@ public class HomeController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
+//		For Empty cart items
+		GlobalData.cart.clear();
 		return "signin";
 	}
 
