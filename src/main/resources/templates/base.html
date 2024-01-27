@@ -80,8 +80,6 @@
 								<!--th:text="${user.email.substring(0, 1).toUpperCase()}"-->
 								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1"
 									style="transform: translateX(-50px);">
-									<li><a class="dropdown-item fw-bold" href="#">My-Profile</a></li>
-									<hr>
 									<li><a class="dropdown-item fw-bold"
 											th:href="@{/user/changeUserPassword}">Change-Password</a></li>
 									<hr>
@@ -177,7 +175,7 @@
 										<ul>
 											<li><a th:href="@{/}">Home</a></li>
 											<li><a th:href="@{/about}">About</a></li>
-											<li><a href="#">Testimonial</a></li>
+											<li><a th:href="@{/testimonial}">Testimonial</a></li>
 											<li><a th:href="@{/blog}">Blog</a></li>
 											<li><a th:href="@{/contact}">Contact</a></li>
 											<li><a th:href="@{/signin}">Login</a></li>

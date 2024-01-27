@@ -34,7 +34,7 @@
 											e-commerce solutions. Elevate your online business with our cutting-edge
 											services tailored to meet your every need.</p>
 										<div class="btn-box">
-											<a href="#" class="btn btn-primary">
+											<a th:href="@{/product}" class="btn ">
 												Shop Now
 											</a>
 										</div>
@@ -60,7 +60,8 @@
 											suite of tools empowering you to thrive in the digital marketplace. Join us
 											to redefine success in e-commerce today.</p>
 										<div class="btn-box">
-											<a href="#" class="btn" style="background: #000000 !important;">
+											<a th:href="@{/product}" class="btn"
+												style="background: #000000 !important;">
 												Shop Now
 											</a>
 										</div>
@@ -87,7 +88,8 @@
 											inventory management.Encourages clients to join for success in the digital
 											marketplace</p>
 										<div class="btn-box">
-											<a href="#" class="btn" style="background:rgb(255, 128, 128) !important;">
+											<a th:href="@{/product}" class="btn"
+												style="background:rgb(64, 128, 128) !important;">
 												Shop Now
 											</a>
 										</div>
@@ -117,277 +119,79 @@
 
 
 	<!-- product section -->
+
 	<section class="product_section layout_padding">
-		<div class="container">
-			<div class="heading_container heading_center">
-				<h2>
-					Our <span>products</span>
-				</h2>
+		<div class="heading_container heading_center">
+			<h2>
+				Our <span>products</span>
+			</h2>
+		</div>
+		<div class="container-fluid">
+			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+						class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+						aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+						aria-label="Slide 3"></button>
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img src="https://rukminim2.flixcart.com/fk-p-flap/1600/270/image/7009dc0a7dab3d91.jpg?q=80"
+							class="d-block w-100" alt="carousel 1st image">
+					</div>
+					<div class="carousel-item">
+						<img src="https://rukminim2.flixcart.com/fk-p-flap/3200/540/image/8c21b4c93944a503.jpg?q=60"
+							class="d-block w-100" alt="carousel 2nd image">
+					</div>
+					<div class="carousel-item">
+						<img src="https://rukminim2.flixcart.com/fk-p-flap/3200/540/image/cf48be669a897c51.jpeg?q=60"
+							class="d-block w-100" alt="carousel 3rd image">
+					</div>
+
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
 			</div>
 			<div class="row">
-
-				<div class="col-sm-6 col-md-4 col-lg-4">
+				<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3">
 					<div class="box">
 						<div class="option_container">
 							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
+								<a th:if="${prod.stock > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
+									class="option1">Add To Cart</a>
+								<a th:if="${prod.stock == 0}" class="option1" style="pointer-events: none;">Out of
+									Stock</a>
+								<a th:href="@{/cart/cartHomePage}" class="option2">Buy Now</a>
 							</div>
 						</div>
 						<div class="img-box">
-							<img th:src="@{/images/product/tv.jpg}" alt="">
+							<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image">
 						</div>
 						<div class="detail-box">
-							<h5>T.V.</h5>
-							<h6>$75</h6>
+							<h5 th:text="${prod.productName}">T.V.</h5>
+							<h6 th:text="${prod.productPrice}">$75</h6>
 						</div>
+						<p class="pt-2" th:text="${prod.productDescription}"></p>
+						<p th:if="${prod.stock == 0}" class="text-danger fw-bold">Product Out of Stock</p>
+						<p th:if="${prod.stock > 0 && prod.stock < 10}" class="fw-bold text-warning">Hurry up! Limited
+							stock available</p>
+						<p>Product Stock: <span class="pt-2" th:text="${prod.stock}"></span></p>
 					</div>
 				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img th:src="@{/images/product/ref.jpg}" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>refrigerator</h5>
-							<h6>$80</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img th:src="@{/images/product/laptop.jpg}" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Laptop</h5>
-							<h6>$68</h6>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Men's Shirt</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p1.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Men's Shirt</h5>
-							<h6>$75</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p2.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Men's Shirt</h5>
-							<h6>$80</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p3.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Women's Dress</h5>
-							<h6>$68</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p4.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Women's Dress</h5>
-							<h6>$70</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p5.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Women's Dress</h5>
-							<h6>$75</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p6.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Women's Dress</h5>
-							<h6>$58</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p7.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Women's Dress</h5>
-							<h6>$80</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p8.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Men's Shirt</h5>
-							<h6>$65</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p9.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Men's Shirt</h5>
-							<h6>$65</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p10.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Men's Shirt</h5>
-							<h6>$65</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p11.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Men's Shirt</h5>
-							<h6>$65</h6>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 col-md-4 col-lg-4">
-					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a href="" class="option1">Add To Cart</a>
-								<a href="" class="option2">Buy Now</a>
-							</div>
-						</div>
-						<div class="img-box">
-							<img src="images/p12.png" alt="">
-						</div>
-						<div class="detail-box">
-							<h5>Women's Dress</h5>
-							<h6>$65</h6>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="btn-box">
-				<a href="">View All products</a>
 			</div>
 		</div>
 	</section>
+
 	<!-- end product section -->
 
 
@@ -652,6 +456,8 @@
 	</section>
 	<!-- end why section -->
 
+
+
 	<!-- arrival section -->
 	<section class="arrival_section">
 		<div class="container">
@@ -706,6 +512,9 @@
 	</section>
 	<!-- end subscribe section -->
 	<!-- client section -->
+
+
+	<!-- client section -->
 	<section class="client_section layout_padding">
 		<div class="container">
 			<div class="heading_container heading_center">
@@ -713,7 +522,18 @@
 					Customer's Testimonial
 				</h2>
 			</div>
-			<div id="carouselExample3Controls" class="carousel slide" data-ride="carousel">
+
+
+
+			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+						class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+						aria-label="Slide 2"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+						aria-label="Slide 3"></button>
+				</div>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<div class="box col-lg-10 mx-auto">
@@ -732,9 +552,10 @@
 									Customer
 								</h6>
 								<p>
-									Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde
-									quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum
-									ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+									Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint
+									unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius
+									officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam!
+									Quaerat.
 								</p>
 							</div>
 						</div>
@@ -744,7 +565,8 @@
 							<div class="img_container">
 								<div class="img-box">
 									<div class="img_box-inner">
-										<img src="images/client.jpg" alt="">
+										<img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"
+											alt="">
 									</div>
 								</div>
 							</div>
@@ -756,9 +578,10 @@
 									Customer
 								</h6>
 								<p>
-									Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde
-									quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum
-									ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+									Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint
+									unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius
+									officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam!
+									Quaerat.
 								</p>
 							</div>
 						</div>
@@ -768,7 +591,8 @@
 							<div class="img_container">
 								<div class="img-box">
 									<div class="img_box-inner">
-										<img src="images/client.jpg" alt="">
+										<img src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+											alt="">
 									</div>
 								</div>
 							</div>
@@ -780,27 +604,35 @@
 									Customer
 								</h6>
 								<p>
-									Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde
-									quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum
-									ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
+									Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint
+									unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius
+									officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam!
+									Quaerat.
 								</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="carousel_btn_box">
-					<a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-slide="prev">
-						<i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-						<span class="sr-only">Previous</span>
-					</a>
-					<a class="carousel-control-next" href="#carouselExample3Controls" role="button" data-slide="next">
-						<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-						<span class="sr-only">Next</span>
-					</a>
-				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
 			</div>
+
+
+
+			<!-- ================== ================  -->
+
 		</div>
 	</section>
+	<!-- end client section -->
+
 	<!-- end client section -->
 
 </body>

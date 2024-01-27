@@ -44,10 +44,6 @@ public class HomeController {
 	UserService userService;
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	
-	
-	
 
 //	 Handler For home page 
 	@GetMapping("/")
@@ -56,6 +52,8 @@ public class HomeController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
+		List<Product> allProduct = this.productService.getAllProduct();
+		model.addAttribute("AllProduct", allProduct);
 //		cart 
 		model.addAttribute("cartCount", GlobalData.cart.size());
 		return "index";
@@ -79,31 +77,30 @@ public class HomeController {
 		model.addAttribute("category", allCategory);
 		return "product";
 	}
-	
+
 	@GetMapping("/showAllProductByCategoryId/{id}")
 	public String showAllProductByCategoryId(@PathVariable Integer id, Model model) {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
-	    List<Product> allProductsByCategoryId = this.productService.getAllProductsByCategoryId(id);
-	    Optional<Category> categoryById = this.categoryService.getCategoryById(id);
-	    model.addAttribute("allProducts", allProductsByCategoryId);
-	    model.addAttribute("category01", categoryById.orElse(null)); // Extract the value or provide a default value
-	    return "particularProductItem";
+		List<Product> allProductsByCategoryId = this.productService.getAllProductsByCategoryId(id);
+		Optional<Category> categoryById = this.categoryService.getCategoryById(id);
+		model.addAttribute("allProducts", allProductsByCategoryId);
+		model.addAttribute("category01", categoryById.orElse(null)); // Extract the value or provide a default value
+		return "particularProductItem";
 	}
 
 // 	search products 
 	@GetMapping("/searchProduct")
-	public String searchProduct(@RequestParam("productName") String productName,Model model) {
+	public String searchProduct(@RequestParam("productName") String productName, Model model) {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
 		List<Product> allProductByProductName = this.productService.getAllProductByProductName(productName);
 		model.addAttribute("AllProduct", allProductByProductName);
 		return "product";
-		
-	}
 
+	}
 
 //	 Handler For product page 
 //	@GetMapping("/product")
@@ -125,7 +122,7 @@ public class HomeController {
 	public void init() {
 		ModelAndView model = new ModelAndView();
 		this.base(model);
-		
+
 	}
 
 	@GetMapping("/base")
@@ -135,15 +132,15 @@ public class HomeController {
 		model.setViewName("base");
 		return model;
 	}
-	
+
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
-		if(p != null) {
+		if (p != null) {
 			String email = p.getName();
 			User user = userRepository.findUserByEmail(email).get();
 			m.addAttribute("user", user);
-			System.out.println("EMAIL : "+user.getEmail());
-			System.out.println("USERNAME : "+user.getUserName());
+			System.out.println("EMAIL : " + user.getEmail());
+			System.out.println("USERNAME : " + user.getUserName());
 		}
 	}
 
@@ -180,10 +177,10 @@ public class HomeController {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
-	
+
 //	Handler For user registration process 
 	@PostMapping("/submitUserSignup")
-	public String submitUserSignup(@ModelAttribute("user") User user, HttpSession session,Model model) {
+	public String submitUserSignup(@ModelAttribute("user") User user, HttpSession session, Model model) {
 		try {
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 //			user.setUserName(bCryptPasswordEncoder.encode(user.getUserName()));
@@ -208,11 +205,9 @@ public class HomeController {
 		}
 	}
 
-
-
 //	 Handler For redirect to sign-in page 
 	@GetMapping("/signin")
-	public String signin(Model model,HttpSession session) {
+	public String signin(Model model, HttpSession session) {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
@@ -221,11 +216,10 @@ public class HomeController {
 		return "signin";
 	}
 
+//	testimonial page 
+	@GetMapping("/testimonial")
+	public String testimonial() {
+		return "testimonial";
+	}
 
- 
-	
-
-	
-	
-	
 }

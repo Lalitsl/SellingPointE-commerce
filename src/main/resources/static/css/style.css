@@ -379,6 +379,7 @@ button.btn:focus {
 	object-position: top right;
 }
 
+/* =======   product section  css start here ====== */
 .product_section .heading_container {
 	margin-bottom: 20px;
 }
@@ -386,7 +387,7 @@ button.btn:focus {
 .product_section .box {
 	position: relative;
 	margin-top: 25px;
-	padding: 35px 35px;
+	padding: 10px 10px;
 	background-color: #f7f8f9;
 	-webkit-transition: all .3s;
 	transition: all .3s;
