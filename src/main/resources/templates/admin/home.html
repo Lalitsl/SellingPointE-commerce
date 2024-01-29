@@ -9,29 +9,29 @@
 <body>
 	<section>
 		<div class="container-fluid p-4 text-center">
-			<h3 class="mb-4 fw-bold">Admin Dashboard</h3>
+			<div class="alert alert-info" role="alert">
+				<h5 class="fw-bold">Admin Dashboard</h5>
+			</div>
 			<div class="row gap-5 offset-2">
 				<div class="col-md-3 p-3 shadow-lg" style="border-radius: 25px;">
-					<h5>Total User</h5>
-					<p>Lorem ipsum dolor sit amet Magni dicta </p>
+					<h3>Total User</h3>
+					<h3 class="mt-5" th:text="${TotalUsers}">01</h3>
 				</div>
 				<div class="col-md-3 p-3 shadow-lg" style="border-radius: 25px;">
-					<h5>Total products</h5>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias repudiandae sed quam labore
-						officia dolorem id qui aut ducimus reiciendis doloribus unde facere voluptates! Magni dicta
-						excepturi totam quibusdam quaerat.</p>
+					<h3>Category Management</h3>
+					<div class="my-4">
+						<a th:href="@{/admin/category}" class="redbtn p-2">Category</a>
+					</div>
 				</div>
 				<div class="col-md-3 p-3 shadow-lg" style="border-radius: 25px;">
-					<h5>Total Sales Revenue</h5>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias repudiandae sed quam labore
-						officia dolorem id qui aut ducimus reiciendis doloribus unde facere voluptates! Magni dicta
-						excepturi totam quibusdam quaerat.</p>
+					<h3>Product Management</h3>
+					<div class="my-4">
+						<a th:href="@{/admin/productHome/0}" class="blackbtn p-2">Product</a>
+					</div>
 				</div>
 				<div class="col-md-3 p-3 shadow-lg" style="border-radius: 25px;">
-					<h5>Total Sales Monthly</h5>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias repudiandae sed quam labore
-						officia dolorem id qui aut ducimus reiciendis doloribus unde facere voluptates! Magni dicta
-						excepturi totam quibusdam quaerat.</p>
+					<h5>User Management</h5>
+					<p>Work in process . we will complete this module according to client requirement.</p>
 				</div>
 			</div>
 		</div>

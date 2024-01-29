@@ -37,6 +37,7 @@ import com.sp.entities.User;
 import com.sp.helper.Message;
 import com.sp.service.CategoryService;
 import com.sp.service.ProductService;
+import com.sp.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -51,6 +52,8 @@ public class adminController {
 	private ProductService productService;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	UserService userService;
 
 //	image directory
 	public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/upload";
@@ -59,6 +62,8 @@ public class adminController {
 	@GetMapping("")
 	public String admin(Model model) {
 		model.addAttribute("title", "sp admin home page");
+		long TotalUsers = userService.countTotalUsers();
+		model.addAttribute("TotalUsers", TotalUsers);
 		return "admin/home";
 	}
 

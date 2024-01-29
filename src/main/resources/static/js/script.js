@@ -52,7 +52,7 @@ $(document).ready(function() {
 // code for payment getway
 
 // first request to server to create order
-/*const paymentStart = () => {
+const paymentStart = () => {
 	console.log("payment started........");
 	let amountText = $("#paymentFeild").text().trim(); // Get the text and remove leading/trailing whitespaces
 	let amount = parseInt(amountText.replace("₹", "").replace(",", "")); // Remove currency symbol and commas
@@ -90,7 +90,7 @@ $(document).ready(function() {
 							console.log(response.razorpay_order_id)
 							console.log(response.razorpay_signature)
 							console.log("payment successfull ...")
-							  payment success message code start  
+							//  payment success message code start  
 							Swal.fire({
 								position: "top-end",
 								icon: "success",
@@ -98,7 +98,7 @@ $(document).ready(function() {
 								showConfirmButton: false,
 								timer: 3000
 							});
-							  payment success message code end  
+							//  payment success message code end  
 						},
 						prefill: {
 							"name": "",
@@ -122,13 +122,13 @@ $(document).ready(function() {
 						console.log(response.error.reason);
 						console.log(response.error.metadata.order_id);
 						console.log(response.error.metadata.payment_id);
-						  payment failed message code start 
+						//  payment failed message code start 
 						Swal.fire({
 							icon: "error",
 							title: "Payment Failed !!!",
 							text: "Something went wrong!",
 						});
-						  payment failed message code end 
+					//	  payment failed message code end 
 					});
 					rzp.open()
 				}
@@ -141,12 +141,12 @@ $(document).ready(function() {
 		}
 	)
 
-};*/
+};
 
 /* ============================ */
 
 // First request to server to create order
-const paymentStart = () => {
+/*const paymentStart = () => {
 	console.log("payment started........");
 	let amountText = $("#paymentFeild").text().trim();
 	let amount = parseInt(amountText.replace("₹", "").replace(",", ""));
@@ -258,7 +258,7 @@ const paymentStart = () => {
 		}
 	});
 };
-
+*/
 
 
 

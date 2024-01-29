@@ -15,10 +15,17 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
+//	add users
 	public User addUser(User user) {
 		return userRepository.save(user);
 	}
 	
+//	count total users
+    public long countTotalUsers() {
+        return userRepository.count();
+    }
+
 //	remove message from session
 	public void removeSessionMessage() {
 		HttpSession session = ((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest().getSession();

@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +27,10 @@ import com.sp.entities.Category;
 import com.sp.entities.Product;
 import com.sp.entities.User;
 import com.sp.global.GlobalData;
-import com.sp.pdf.EmailSender;
-import com.sp.pdf.PdfGenerator;
 import com.sp.service.CategoryService;
 import com.sp.service.ProductService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cart")
@@ -56,7 +55,7 @@ public class cartController {
 		m.addAttribute("category", allCategory);
 		
 //		cart calculation
-		if (GlobalData.cart.isEmpty()) {
+		if (GlobalData.cart.isEmpty()) {	
 // 		Cart is empty, set a message
 			m.addAttribute("cartEmptyMessage", "Cart is empty. Please add items to the cart.");
 		} else {
@@ -72,10 +71,10 @@ public class cartController {
 			m.addAttribute("otherValue", 40);
 			m.addAttribute("setProductQuantity", 1);
 		}
-		
 		return "/User/cartHomePage";
 	}
-
+    
+    
 	@GetMapping("/addToCart/{id}")
 	private String addToCart(@PathVariable int id, Model model) {
 		Optional<Product> productOptional = productService.getProductById(id);
@@ -112,7 +111,6 @@ public class cartController {
     public String updateQuantity1(@ModelAttribute("cartItem") CartItem cartItem) {
         // Retrieve the product from the database
         Optional<Product> productOptional = productService.getProductById(cartItem.getProductId());
-
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             // Update the product quantity
@@ -178,23 +176,13 @@ public class cartController {
 		System.out.println(order);
 		System.out.println("ORDER : "+order.toString());
 		return order.toString();
-
+		
 	}
+
 	
 	
-	@GetMapping("/generateBillPdf")
-	public String generateBillPdf(@RequestParam String orderId) {
-	    // Generate PDF and return the file path
-	    String fileName = "bill_" + orderId + ".pdf";
-	    PdfGenerator.generateBillPdf(fileName, "Bill details for order ID: " + orderId+" THANK-YOU TEAM SELLING POINT......");
-	    return fileName;
-	}
-
-	@GetMapping("/sendEmail")
-	public void sendEmail(@RequestParam String toEmail, @RequestParam String pdfPath) {
-	    // Send email with the PDF attachment
-	    EmailSender.sendEmail(toEmail, "SELLEING POINT E-COMMERCE PROJECT ", "Your Email Body", pdfPath);
-	}
-
+	
 
 }
+
+
