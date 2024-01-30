@@ -2,7 +2,7 @@ package com.sp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.sp.pdf.PdfGenerator;
+import com.sp.model.PdfGenerator;
 
 @Service
 public class PdfService {

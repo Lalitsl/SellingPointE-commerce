@@ -2,7 +2,7 @@ package com.sp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.sp.pdf.EmailSender;
+import com.sp.model.EmailSender;
 
 @Service
 public class EmailService {

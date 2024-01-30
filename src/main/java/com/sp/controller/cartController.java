@@ -131,7 +131,6 @@ public class cartController {
 	    // Update the setProductQuantity attribute in the model
 	    // You may also want to update the quantity in the database or cart
 	    model.addAttribute("setProductQuantity", newQuantity);
-
 	    // Return a response if needed
 	    return "Quantity updated successfully";
 	}
@@ -150,11 +149,9 @@ public class cartController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
-		
 		model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
 		model.addAttribute("Shipping", 30);
 		model.addAttribute("otherValue", 40);
-		
 		return "/User/checkoutItem";
 
 	}

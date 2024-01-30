@@ -106,7 +106,7 @@
 					        <p class="pt-2" th:text="${prod.productDescription}"></p>
 					        <p th:if="${prod.stock == 0}" class="text-danger fw-bold">Product Out of Stock</p>
 					        <p th:if="${prod.stock > 0 && prod.stock < 10}" class="fw-bold text-warning">Hurry up! Limited stock available</p>
-					        <p>Product Stock: <span class="pt-2" th:text="${prod.stock}"></span></p>
+					        <p>Product Quantity : <span class="pt-2" th:text="${prod.stock}"></span></p>
 					    </div>
 					</div>
 				</div>

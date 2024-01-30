@@ -54,7 +54,7 @@ public class HomeController {
 		model.addAttribute("category", allCategory);
 		List<Product> allProduct = this.productService.getAllProduct();
 		model.addAttribute("AllProduct", allProduct);
-//		cart 
+//		cart quantity counting
 		model.addAttribute("cartCount", GlobalData.cart.size());
 		return "index";
 	}
@@ -75,6 +75,8 @@ public class HomeController {
 		List<Product> allProduct = this.productService.getAllProduct();
 		model.addAttribute("AllProduct", allProduct);
 		model.addAttribute("category", allCategory);
+//		cart quantity counting
+		model.addAttribute("cartCount", GlobalData.cart.size());
 		return "product";
 	}
 
@@ -221,5 +223,9 @@ public class HomeController {
 	public String testimonial() {
 		return "testimonial";
 	}
+	
 
+	
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.sp.pdf;
+package com.sp.model;
 
 import java.io.FileOutputStream;
 
