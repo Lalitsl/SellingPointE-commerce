@@ -57,6 +57,13 @@ public class ProductService {
 		
 	}
 	
+//	search all products by price range
+	public List<Product> searchAllProductByProductPrice(Double productPrice){
+		return productRepository.findAllByProductPriceContaining(productPrice);
+		
+	}
+	
+	
 
 }
 

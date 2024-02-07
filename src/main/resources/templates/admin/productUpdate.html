@@ -8,8 +8,8 @@
 
 <body>
 	<section>
-		<div class="container p-3">
-			<div class="col-md-4 offset-4 shadow-lg p-3">
+		<div class="container">
+			<div class="col-md-10 offset-1 shadow-lg p-3">
 				<form action="#" th:action="@{/admin/updateProduct}" method="POST" th:object="${product}"
 					enctype="multipart/form-data">
 					<h5 class="text-center fw-bold my-3">Update Product Details</h5>
@@ -19,20 +19,74 @@
 						<span th:text="${session.message.content}" class="fw-bold"></span>
 					</div>
 					<input type="hidden" name="productId" th:value="${product.productId}" />
-					<input type="text" name="productName" th:value="${product.productName}" />
-					<input type="text" name="productDescription" th:value="${product.productDescription}" />
-					<input type="text" name="productCompanyName" th:value="${product.productCompanyName}" />
-					<select class="form-select mt-1 mb-4 p-2" aria-label="Default select example" name="categoryid"
-						style="border-radius: 0%;" required
-						oninvalid="this.setCustomValidity('Please select a product category')"
-						oninput="this.setCustomValidity('')">
-						<option value="" disabled selected>Select product category</option>
-						<option th:each="cate : ${category}" th:value="${cate.categoryid}"
-							th:text="${cate.categoryname}"></option>
-					</select>
-					<input type="number" name="productPrice" th:value="${product.productPrice}" />
-					<input type="number" name="stock" th:value="${product.stock}" />
-					<input type="file" name="productImage" id="productImageInput" />
+					<div class="row gap-4">
+						<div class="col">
+							<label class="">Edit Product Name</label>
+							<input type="text" name="productName" th:value="${product.productName}" />
+						</div>
+						<div class="col">
+							<label class="">Edit Product Description</label>
+							<input type="text" name="productDescription" th:value="${product.productDescription}" />
+						</div>
+						<div class="col">
+							<label class="">Edit Product Company Name</label>
+							<input type="text" name="productCompanyName" th:value="${product.productCompanyName}" />
+						</div>
+					</div>
+
+					<div class="row gap-4">
+						<div class="col">
+							<label class="">Edit Product category</label>
+							<select class="form-select mt-1 mb-4 p-2" aria-label="Default select example"
+								name="categoryid" style="border-radius: 0%;" required
+								oninvalid="this.setCustomValidity('Please select a product category')"
+								oninput="this.setCustomValidity('')">
+								<option value="" disabled selected>Select product category</option>
+								<option th:each="cate : ${category}" th:value="${cate.categoryid}"
+									th:text="${cate.categoryname}"></option>
+							</select>
+						</div>
+						<div class="col">
+							<label class="">Edit Product price</label>
+							<input type="number" name="productPrice" th:value="${product.productPrice}" />
+						</div>
+						<div class="col">
+							<label class="">Edit Product Quantity</label>
+							<input type="number" name="quantity" th:value="${product.quantity}" />
+						</div>
+					</div>
+					
+					<div class="row gap-4">
+						<div class="col">
+							<label class="">Edit Product Discount</label>
+							<input type="text" name="discount" th:value="${product.discount}" />
+						</div>
+						<div class="col">
+							<label class="">Edit Option 1 </label>
+							<input type="text" name="Option1" th:value="${product.Option1}" />
+						</div>
+						<div class="col">
+							<label class="">Edit Option 2 </label>
+							<input type="text" name="Option2" th:value="${product.Option2}" />
+						</div>
+					</div>
+					
+					<div class="row gap-4">
+						<div class="col">
+							<label class="">Edit Option 3 </label>
+							<input type="text" name="Option3" th:value="${product.Option3}" />
+						</div>
+						<div class="col">
+							<label class="">Edit Option 4 </label>
+							<input type="text" name="Option4" th:value="${product.Option4}" />
+						</div>
+						<div class="col">
+							<label class="">Upload New Image </label>
+							<input type="file" name="productImage" id="productImageInput" />
+						</div>
+					</div>
+					
+					
 					<div class="text-center my-2">
 						<img id="previewImage" th:src="@{'/images/upload/'+${product.productImage}}" class="w-25">
 					</div>

@@ -25,10 +25,16 @@
 						<th scope="col">product Name</th>
 						<th scope="col">product category</th>
 						<th scope="col">product Details</th>
-						<th scope="col">product Company Name</th>
-						<th scope="col">Product Price</th>
-						<th scope="col">Product Stock</th>
-						<th scope="col">Product Image</th>
+						<th scope="col">Company Name</th>
+						<th scope="col">Price</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">Discount</th>
+						<th scope="col">Option 1</th>
+						<th scope="col">Option 2</th>
+						<th scope="col">Option 3</th>
+						<th scope="col">Option 4</th>
+						<th scope="col">Date</th>
+						<th scope="col">Image</th>
 						<th scope="col">Operation</th>
 					</tr>
 				</thead>
@@ -40,9 +46,17 @@
 						<td th:text="${p.productDescription}"></td>
 						<td th:text="${p.productCompanyName}"></td>
 						<td th:text="${p.productPrice}"></td>
-						<td th:text="${p.stock}"></td>
+						<td th:text="${p.quantity}"></td>
+						
+						<td th:text="${p.discount}"></td>
+						<td th:text="${p.option1}"></td>
+						<td th:text="${p.option2}"></td>
+						<td th:text="${p.option3}"></td>
+						<td th:text="${p.option4}"></td>
+						<td th:text="${p.productDate}"></td>
+						
 						<td>
-							<img class="w-25" th:src="@{${'/images/upload/'+p.productImage}}">
+							<img class="w-100" th:src="@{${'/images/upload/'+p.productImage}}">
 						</td>
 						<td class="d-flex">
 							<a th:href="@{/admin/sendUpdateProductPage/{id}(id=${p.productId})}"><i

@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="full">
-							<h3 th:text="${{category01.categoryname}+' Products'}">  </h3>
+							<h3 th:text="${{category01.categoryname}+' Products'}"> </h3>
 						</div>
 					</div>
 				</div>
@@ -24,7 +24,7 @@
 
 
 
-	
+
 
 
 		<!-- product section -->
@@ -33,20 +33,23 @@
 				<div class="row">
 					<div th:each="prod:${allProducts}" class="col-sm-6 col-md-4 col-lg-3">
 						<div class="box">
-							<div class="option_container">
-								<div class="options">
-									<a href="" class="option1">Add To Cart</a>
-									<a href="" class="option2">Buy Now</a>
-								</div>
-							</div>
 							<div class="img-box">
-								<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
+								<a th:href="@{/productDetailsPageById/{id}(id=${prod.productId})}"><img
+										th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image"></a>
 							</div>
 							<div class="detail-box">
 								<h5 th:text="${prod.productName}"></h5>
 								<h6 th:text="${prod.productPrice}"></h6>
 							</div>
 							<p class="pt-2" th:text="${prod.productDescription}"></p>
+							<div class="mx-2">
+								<a th:if="${prod.quantity > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
+									class="redbtn p-2">Add To Cart</a>
+								<a th:if="${prod.quantity == 0}" class="redbtn p-2" style="pointer-events: none; background-color: red; color: white;">Out
+									of
+									Stock</a>
+								<a th:href="@{/cart/cartHomePage}" class="blackbtn p-2 px-3 mx-2">Buy Now</a>
+							</div>
 						</div>
 					</div>
 				</div>

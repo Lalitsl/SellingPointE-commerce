@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>000</title>
+</head>
+
+<body>
+	<section>
+		<!-- inner page section -->
+		<section class="inner_page_head">
+			<div class="container_fuild">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="full">
+							<!--<h3 th:text="${{category01.categoryname}+' Products'}">  </h3>-->
+							<h3> Product Details Page </h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end inner page section -->
+
+
+
+
+
+
+		<!-- product section -->
+		<section class="product_section layout_padding">
+			<div class="container">
+				<div class="row shadow-lg p-3">
+					<div th:each="prod:${product01}" class="col-sm-6 col-md-4 col-lg-4">
+						<div class="text-center">
+							<div class="img-box">
+								<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
+							</div>
+						</div>
+					</div>
+					<div th:each="prod:${product01}" class="col-sm-6 col-md-4 col-lg-8">
+						<div class="detail-box">
+							<h5 th:text="${prod.productName}"></h5>
+							<h6 th:text="${prod.productPrice}"></h6>
+							<p class="pt-2" th:text="${prod.productDescription}"></p>
+							<p class="pt-2" th:text="${prod.productCompanyName}"></p>
+							<p class="pt-2" th:text="${prod.productDescription}"></p>
+						</div>
+						<div class="mx-2">
+							<a th:if="${prod.quantity > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
+								class="redbtn p-2">Add To Cart</a>
+							<a th:if="${prod.quantity == 0}" class="p-2" style="pointer-events: none; background-color: red; color: white;">Out
+								of
+								Stock</a>
+							<a th:href="@{/cart/cartHomePage}" class="blackbtn p-2 px-3 mx-2">Buy Now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- end product section -->
+
+
+	</section>
+</body>
+
+</html>

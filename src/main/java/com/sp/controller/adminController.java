@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Timer;
@@ -137,7 +138,6 @@ public class adminController {
 	public String deleteAllCategory(HttpSession session) {
 		try {
 			categoryService.deleteAllCategory();
-			System.out.println("all category deleteed ,............");
 			session.setAttribute("message", new Message("All category deleted .....", "success"));
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {
@@ -185,14 +185,18 @@ public class adminController {
 //	product home page handler 
 	@GetMapping("/productHome/{page}")
 	public String productHome(@PathVariable("page") Integer page, Model model) {
-		model.addAttribute("title", "Product home page ");
-//		pagination code 
-		Pageable pageable = PageRequest.of(page, 3);
-		Page<Product> allProduct = productService.getAllProduct(pageable);
-		model.addAttribute("products", allProduct);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPage", allProduct.getTotalPages());
-		return "admin/productHome";
+		try {
+			model.addAttribute("title", "Product home page ");
+//			pagination code 
+			Pageable pageable = PageRequest.of(page, 5);
+			Page<Product> allProduct = productService.getAllProduct(pageable);
+			model.addAttribute("products", allProduct);
+			model.addAttribute("currentPage", page);
+			model.addAttribute("totalPage", allProduct.getTotalPages());
+			return "admin/productHome";
+		} catch (Exception e) {
+			return "404";
+		}
 
 	}
 
@@ -259,7 +263,13 @@ public class adminController {
 			product.setProductCompanyName(productDTO.getProductCompanyName());
 			product.setProductId(productDTO.getProductId());
 			product.setProductPrice(productDTO.getProductPrice());
-			product.setStock(productDTO.getStock());
+			product.setQuantity(productDTO.getQuantity());
+			product.setDiscount(productDTO.getDiscount());
+			product.setOption1(productDTO.getOption1());
+			product.setOption2(productDTO.getOption2());
+			product.setOption3(productDTO.getOption3());
+			product.setOption4(productDTO.getOption4());
+			product.setProductDate(LocalDate.now());
 			int cateID = Integer.parseInt(productDTO.getCategoryid());
 			product.setCategory(categoryService.getCategoryById(cateID).get());
 			// String imageUUID;
@@ -320,48 +330,62 @@ public class adminController {
 //	redirect to update Product form page 
 	@GetMapping("/sendUpdateProductPage/{id}")
 	public String sendUpdateProductPage(@PathVariable int id, Model model) {
-		Product product = this.productService.getProductById(id).get();
-		model.addAttribute("category", categoryService.getAllCategory());
-		model.addAttribute("product", product);
-		return "admin/productUpdate";
+		try {
+			Product product = this.productService.getProductById(id).get();
+			model.addAttribute("category", categoryService.getAllCategory());
+			model.addAttribute("product", product);
+			return "admin/productUpdate";
+		} catch (Exception e) {
+			return "404";
+		}
 	}
 
 //	update product process handler
 	@PostMapping("/updateProduct")
 	public String updateproduct(@ModelAttribute("product") ProductDTO productDto,
 			@RequestParam("productImage") MultipartFile file, Model model, HttpSession session) throws IOException {
-		// Retrieve the existing product
-		Product existingProduct = this.productService.getProductById(productDto.getProductId()).get();
-		existingProduct.setProductName(productDto.getProductName());
-		existingProduct.setProductDescription(productDto.getProductDescription());
-		existingProduct.setProductCompanyName(productDto.getProductCompanyName());
-		existingProduct.setProductPrice(productDto.getProductPrice());
-		existingProduct.setStock(productDto.getStock());
-		int cateID = Integer.parseInt(productDto.getCategoryid());
-		existingProduct.setCategory(categoryService.getCategoryById(cateID).get());
-		if (!file.isEmpty()) {
-			// Update the product image
-			existingProduct.setProductImage(file.getOriginalFilename());
-			File saveFile = new ClassPathResource("static/images/upload").getFile();
-			Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
-			Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			System.out.println("Image is uploaded successfully");
-		} else {
-			// If no new file is provided, retain the existing image
-			System.out.println("No new image provided, using the existing one");
-		}
-
-		productService.addProduct(existingProduct);
-		session.setAttribute("message", new Message("Product updated successfully", "success"));
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				session.removeAttribute("message");
-				timer.cancel(); // Cancel the timer after removing the message
+		try {
+			// Retrieve the existing product
+			Product existingProduct = this.productService.getProductById(productDto.getProductId()).get();
+			existingProduct.setProductName(productDto.getProductName());
+			existingProduct.setProductDescription(productDto.getProductDescription());
+			existingProduct.setProductCompanyName(productDto.getProductCompanyName());
+			existingProduct.setProductPrice(productDto.getProductPrice());
+			existingProduct.setQuantity((productDto.getQuantity()));
+			existingProduct.setDiscount(productDto.getDiscount());
+			existingProduct.setOption1(productDto.getOption1());
+			existingProduct.setOption2(productDto.getOption2());
+			existingProduct.setOption3(productDto.getOption3());
+			existingProduct.setOption4(productDto.getOption4());
+			existingProduct.setProductDate(LocalDate.now());
+			int cateID = Integer.parseInt(productDto.getCategoryid());
+			existingProduct.setCategory(categoryService.getCategoryById(cateID).get());
+			if (!file.isEmpty()) {
+				// Update the product image
+				existingProduct.setProductImage(file.getOriginalFilename());
+				File saveFile = new ClassPathResource("static/images/upload").getFile();
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				System.out.println("Image is uploaded successfully");
+			} else {
+				// If no new file is provided, retain the existing image
+				System.out.println("No new image provided, using the existing one");
 			}
-		}, 3000);
-		return "redirect:/admin/productHome/0";
+
+			productService.addProduct(existingProduct);
+			session.setAttribute("message", new Message("Product updated successfully", "success"));
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					session.removeAttribute("message");
+					timer.cancel(); // Cancel the timer after removing the message
+				}
+			}, 3000);
+			return "redirect:/admin/productHome/0";
+		} catch (Exception e) {
+			return "404";
+		}
 	}
 
 //	delete all product
@@ -390,10 +414,14 @@ public class adminController {
 
 	@GetMapping("/adminProfile")
 	public String adminProfile(Principal p, Model m) {
-		String email = p.getName();
-		User user = userRepository.findUserByEmail(email).get();
-		m.addAttribute("user", user);
-		return "admin/adminProfile";
+		try {
+			String email = p.getName();
+			User user = userRepository.findUserByEmail(email).get();
+			m.addAttribute("user", user);
+			return "admin/adminProfile";
+		} catch (Exception e) {
+			return "404";
+		}
 	}
 
 //	update ad-min profile 

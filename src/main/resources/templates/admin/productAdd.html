@@ -9,7 +9,7 @@
 <body>
 	<section>
 		<div class="container p-3">
-			<div class="col-md-4 offset-4 shadow-lg p-3">
+			<div class="col-md-8 offset-2 shadow-lg p-3">
 				<form action="#" th:action="@{/admin/addProduct}" method="POST" th:object="${productDto}"
 					enctype="multipart/form-data">
 					<h5 class="text-center fw-bold my-3">Add Product Details</h5>
@@ -19,32 +19,47 @@
 						<span th:text="${session.message.content}" class="fw-bold"></span>
 					</div>
 					<input type="hidden" name="productId" th:field="*{productId}" />
-					<input type="text" placeholder="Enter Product Name" name="productName"
-						th:field="*{productName}" required />
-					<input type="text" placeholder="Enter Product description" name="productDescription"
-						th:field="*{productDescription}" required />
-					<input type="text" placeholder="Enter Product company name" name="productCompanyName"
-						th:field="*{productCompanyName}" required />
+					<div class="d-flex gap-4">
+						<input type="text" placeholder="Enter Product Name" name="productName" th:field="*{productName}"
+							required />
+						<input type="text" placeholder="Enter Product description" name="productDescription"
+							th:field="*{productDescription}" required />
+						<input type="text" placeholder="Enter Product company name" name="productCompanyName"
+							th:field="*{productCompanyName}" required />
+					</div>
+
+					<div class="d-flex gap-4">
+						<select class="form-select mt-1 mb-4 p-2" aria-label="Default select example" name="categoryid"
+							style="border-radius: 0%;" required
+							oninvalid="this.setCustomValidity('Please select a product category')"
+							oninput="this.setCustomValidity('')">
+							<option value="" disabled selected>Select product category</option>
+							<option th:each="cate : ${category}" th:value="${cate.categoryid}"
+								th:text="${cate.categoryname}"></option>
+						</select>
+						<input type="number" class="" placeholder="Enter Product price" name="productPrice"
+							th:field="*{productPrice}" required />
+						<input type="number" class="" placeholder="Enter Product quantity" name="quantity" required />
+					</div>
+
+					<div class="d-flex gap-4">
+						<input type="number" placeholder="Enter Product discount in % " name="discount"
+							 required />
+						<div class="wrap">
+							<a href="#" class="add"><i class="fa-solid fa-circle-plus fa-2xl pt-4"></i></a>
+						</div>
+					</div>
 					
-					<select class="form-select mt-1 mb-4 p-2" aria-label="Default select example" name="categoryid"
-						style="border-radius: 0%;" required
-						oninvalid="this.setCustomValidity('Please select a product category')"
-						oninput="this.setCustomValidity('')">
-						<option value="" disabled selected>Select product category</option>
-						<option th:each="cate : ${category}" th:value="${cate.categoryid}"
-							th:text="${cate.categoryname}"></option>
-					</select>
+					<div class="inp-group my-2">
+					</div>
 
-					<input type="number" class="" placeholder="Enter Product price" name="productPrice"
-						th:field="*{productPrice}" required />
-					<input type="number" class="" placeholder="Enter Product stock" name="stock" required />
-
-					<input type="file" class="" name="productImage" th:field="*{productImage}" id="productImageInput"
-						onchange="previewImage()" />
-
-					<!-- Image preview div -->
-					<div class="text-center my-2" id="imagePreview" style="display: none;">
-						<img id="preview" src="#" alt="Image Preview" class="w-25" />
+					<div class="d-flex gap-4">
+						<input type="file" class="" name="productImage" th:field="*{productImage}"
+							id="productImageInput" onchange="previewImage()" />
+						<!-- Image preview div -->
+						<div class="text-center my-2" id="imagePreview" style="display: none;">
+							<img id="preview" src="#" alt="Image Preview" class="w-25" />
+						</div>
 					</div>
 
 					<div class="text-center">
@@ -58,6 +73,8 @@
 		</div>
 
 		<script th:inline="javascript">
+			
+			// image upload preview code  
 			setTimeout(function () {
 				var alertMessage = document.getElementById('alertMessage');
 				if (alertMessage) {

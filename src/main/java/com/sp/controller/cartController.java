@@ -54,15 +54,18 @@ public class cartController {
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		m.addAttribute("category", allCategory);
 		
-//		cart calculation
+//		cart calculationSSS
 		if (GlobalData.cart.isEmpty()) {	
 // 		Cart is empty, set a message
 			m.addAttribute("cartEmptyMessage", "Cart is empty. Please add items to the cart.");
+			m.addAttribute("Shipping", 0);
+			m.addAttribute("otherValue", 0);
+			m.addAttribute("total", 0);
+			
 		} else {
 			m.addAttribute("cartCount", GlobalData.cart.size());
 			m.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
 			m.addAttribute("cart", GlobalData.cart);
-
 			// generate random values for shipping and other fees
 //	        Random random = new Random();
 //	        int shippingValue = random.nextInt(41) + 10; // Generates a random integer between 10 and 50 (inclusive)
@@ -83,10 +86,10 @@ public class cartController {
 			Product product = productOptional.get();
 
 			// Check if the product is in stock
-			if (product.getStock() > 0) {
+			if (product.getQuantity() > 0) {
 				// Update the product quantity and stock
-				int updatedStock = product.getStock() - 1;
-				product.setStock(updatedStock);
+				int updatedStock = product.getQuantity() - 1;
+				product.setQuantity(updatedStock);
 
 				// Save the updated product to the database
 				productService.addProduct(product);
@@ -114,7 +117,7 @@ public class cartController {
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             // Update the product quantity
-            product.setStock(cartItem.getProductQuantity());
+            product.setQuantity(cartItem.getProductQuantity());
             // Save the updated product to the database
             productService.addProduct(product);
             // Redirect to the cart page
@@ -172,14 +175,13 @@ public class cartController {
 		Order order = client.orders.create(ob);
 		System.out.println(order);
 		System.out.println("ORDER : "+order.toString());
-		return order.toString();
+		return order.toString();	
 		
 	}
 
-	
-	
-	
 
+	
+	
 }
 
 

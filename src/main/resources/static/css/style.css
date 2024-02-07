@@ -1254,3 +1254,50 @@ https://preview.hasthemes.com/xoss-preview/xoss/index.html
 }
 
 /* ==========  sidebar css end here ======== */
+
+
+/* ====== dynamic Field creation on form code start here  ======*/
+.inp-group .flex{
+	display: flex;
+	gap: 1.5em;
+}
+.inp-group .delete{
+	text-decoration: none;
+	display: inline-block;
+	background-color: #f44336;
+	color: white;
+	width: 30px;
+	height: 30px;
+	margin-left: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	font-size: 35px;
+	margin-top: 7px;
+}
+/* ====== dynamic Field creation on form code end here   ======*/
+
+
+/* ====== navbar search box code start here   ======*/
+
+.autocom-box {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.suggestion-item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* ====== navbar search box code end here   ======*/

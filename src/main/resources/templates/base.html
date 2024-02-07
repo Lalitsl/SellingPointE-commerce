@@ -40,10 +40,13 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav">
 						<li>
-							<form class="pt-2" th:action="@{/searchProduct}">
+							<form class="pt-2" th:action="@{/searchProduct}" autocomplete="off">
 								<div id="nav_search_input" class="input-group">
-									<input class="form-control border-end-0 border" type="search" name="productName"
-										id="example-search-input" placeholder="search product">
+									<a href="" target="_blank" hidden></a>
+									<div class="autocomplete" style="width:400px;">
+										<input class="form-control border-end-0 border" type="search" name="productName"
+											placeholder="search product" id="myInput">
+									</div>
 									<span class="input-group-append">
 										<button
 											class="btn btn-outline-secondary border-start-0 border-bottom-0 border ms-n5"
@@ -53,7 +56,78 @@
 									</span>
 								</div>
 							</form>
+							<script>
+
+								function autocomplete(inp, arr) {
+									var currentFocus;
+									inp.addEventListener("input", function (e) {
+										var a, b, i, val = this.value;
+										closeAllLists();
+										if (!val) {return false;}
+										currentFocus = -1;
+										a = document.createElement("DIV");
+										a.setAttribute("id", this.id + "autocomplete-list");
+										a.setAttribute("class", "autocomplete-items");
+										this.parentNode.appendChild(a);
+										for (i = 0; i < arr.length; i++) {
+											if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+												b = document.createElement("DIV");
+												b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+												b.innerHTML += arr[i].substr(val.length);
+												b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+												b.addEventListener("click", function (e) {
+													inp.value = this.getElementsByTagName("input")[0].value;
+													closeAllLists();
+												});
+												a.appendChild(b);
+											}
+										}
+									});
+									inp.addEventListener("keydown", function (e) {
+										var x = document.getElementById(this.id + "autocomplete-list");
+										if (x) x = x.getElementsByTagName("div");
+										if (e.keyCode == 40) {
+											currentFocus++;
+											addActive(x);
+										} else if (e.keyCode == 38) {
+											currentFocus--;
+											addActive(x);
+										} else if (e.keyCode == 13) {
+											e.preventDefault();
+											if (currentFocus > -1) {
+												if (x) x[currentFocus].click();
+											}
+										}
+									});
+									function addActive(x) {
+										if (!x) return false;
+										removeActive(x);
+										if (currentFocus >= x.length) currentFocus = 0;
+										if (currentFocus < 0) currentFocus = (x.length - 1);
+										x[currentFocus].classList.add("autocomplete-active");
+									}
+									function removeActive(x) {
+										for (var i = 0; i < x.length; i++) {
+											x[i].classList.remove("autocomplete-active");
+										}
+									}
+									function closeAllLists(elmnt) {
+										var x = document.getElementsByClassName("autocomplete-items");
+										for (var i = 0; i < x.length; i++) {
+											if (elmnt != x[i] && elmnt != inp) {
+												x[i].parentNode.removeChild(x[i]);
+											}
+										}
+									}
+									document.addEventListener("click", function (e) {
+										closeAllLists(e.target);
+									});
+								}
+								var products = ["Laptop", "Lap", "TV" , "shirt", "mobile"];
+								autocomplete(document.getElementById("myInput"), products);
+							</script>
 						</li>
+
 						<li class="nav-item active">
 							<a class="nav-link mx-2" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
 						</li>
@@ -272,10 +346,10 @@
 
 	<!-- sweet alert message link  -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	
+
 	<!--  payment integration link  using razoypay -->
 	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-	
+
 	<!-- Link to the latest version of jQuery via CDN -->
 	<!--<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 

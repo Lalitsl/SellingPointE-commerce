@@ -128,7 +128,7 @@ const paymentStart = () => {
 							title: "Payment Failed !!!",
 							text: "Something went wrong!",
 						});
-					//	  payment failed message code end 
+						//	  payment failed message code end 
 					});
 					rzp.open()
 				}
@@ -261,16 +261,45 @@ const paymentStart = () => {
 */
 
 
+// dynamic Field creation on form [js code start here ]
+
+const addBtn = document.querySelector(".add");
+const input1 = document.querySelector(".inp-group");
+let inputCounter = 1;
+function removeInput() {
+	this.parentElement.remove();
+}
+function addInput() {
+	// Check if there are already four input fields
+	if (input1.querySelectorAll('.flex').length >= 4) {
+		alert("You can only add up to 4 options.");
+		return;
+	}
+	const name = document.createElement("input");
+	name.type = "text";
+	name.name = "option" + inputCounter;
+	name.placeholder = "Add dynamic option here ";
+	const btn = document.createElement("a");
+	btn.className = "delete";
+	btn.innerHTML = "&times";
+	const flex = document.createElement("div");
+	flex.className = "flex";
+	input1.appendChild(flex);
+	flex.appendChild(name);
+	flex.appendChild(btn);
+	btn.addEventListener("click", removeInput);
+	// Increment the counter value for the next input field
+	inputCounter++;
+}
+addBtn.addEventListener("click", addInput);
+
+// dynamic Field creation on form [js code end here ]
+
+// navbar search box suggetion code start here 
 
 
 
-
-
-
-
-
-
-
+// navbar search box suggetion code end here 
 
 
 

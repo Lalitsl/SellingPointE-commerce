@@ -165,27 +165,28 @@
 			<div class="row">
 				<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3">
 					<div class="box">
-						<div class="option_container">
-							<div class="options">
-								<a th:if="${prod.stock > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
-									class="option1">Add To Cart</a>
-								<a th:if="${prod.stock == 0}" class="option1" style="pointer-events: none;">Out of
-									Stock</a>
-								<a th:href="@{/cart/cartHomePage}" class="option2">Buy Now</a>
-							</div>
-						</div>
 						<div class="img-box">
-							<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image">
+							<a th:href="@{/productDetailsPageById/{id}(id=${prod.productId})}"><img
+									th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image"></a>
 						</div>
 						<div class="detail-box">
 							<h5 th:text="${prod.productName}">T.V.</h5>
 							<h6 th:text="${prod.productPrice}">$75</h6>
 						</div>
 						<p class="pt-2" th:text="${prod.productDescription}"></p>
-						<p th:if="${prod.stock == 0}" class="text-danger fw-bold">Product Out of Stock</p>
-						<p th:if="${prod.stock > 0 && prod.stock < 10}" class="fw-bold text-warning">Hurry up! Limited
+						<p th:if="${prod.quantity == 0}" class="text-danger fw-bold">Product Out of Stock</p>
+						<p th:if="${prod.quantity > 0 && prod.quantity < 10}" class="fw-bold text-warning">Hurry up!
+							Limited
 							stock available</p>
-						<p>Product Stock: <span class="pt-2" th:text="${prod.stock}"></span></p>
+						<p>Product Stock: <span class="pt-2" th:text="${prod.quantity}"></span></p>
+						<div class="mx-2">
+							<a th:if="${prod.quantity > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
+								class="redbtn p-2">Add To Cart</a>
+							<a th:if="${prod.quantity == 0}" class="p-2"
+								style="pointer-events: none; background-color: red; color: white;">Out of
+								Stock</a>
+							<a th:href="@{/cart/cartHomePage}" class="blackbtn p-2 px-3 mx-2">Buy Now</a>
+						</div>
 					</div>
 				</div>
 			</div>

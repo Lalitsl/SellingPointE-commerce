@@ -16,15 +16,19 @@ import jakarta.persistence.OneToMany;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int categoryid;
 	@Column(nullable = false)
 	private String categoryname;
 	@Column(nullable = false)
 	private String categorydetails;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-	private List<Product> products=new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category") private
+	List<Product> products=new ArrayList<>();
+	
+	
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+//	private List<SubCategory> subCategories = new ArrayList<>();
 
 	
 	

@@ -12,5 +12,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> findAllByCategory_Categoryid(int categoryId);
 
 	List<Product> findAllByProductNameContaining(String productName);
-
+	
+//	search all products by price range
+	List<Product> findAllByProductPriceContaining(Double productPrice);
+	
+	
 }
