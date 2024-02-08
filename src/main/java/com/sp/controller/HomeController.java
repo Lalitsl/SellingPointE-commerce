@@ -1,6 +1,7 @@
 package com.sp.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +113,7 @@ public class HomeController {
 //			get side-bar drop-down all category from database
 			List<Category> allCategory = this.categoryService.getAllCategory();
 			model.addAttribute("category", allCategory);
-			
+
 			Product product = this.productService.getProductById(id).get();
 			model.addAttribute("product01", product); // Extract the value or provide a default value
 			return "productDetails";
@@ -121,7 +122,6 @@ public class HomeController {
 		}
 	}
 
-	
 // 	search products 
 	@GetMapping("/searchProduct")
 	public String searchProduct(@RequestParam("productName") String productName, Model model) {
@@ -129,7 +129,7 @@ public class HomeController {
 //			get side-bar drop-down all category from database
 			List<Category> allCategory = this.categoryService.getAllCategory();
 			model.addAttribute("category", allCategory);
-			
+
 			List<Product> allProductByProductName = this.productService.getAllProductByProductName(productName);
 			model.addAttribute("AllProduct", allProductByProductName);
 			return "product";
@@ -139,6 +139,40 @@ public class HomeController {
 
 	}
 
+//	search product by product price 
+	@GetMapping("/searchProductsByPrice")
+	public String searchProductsByPriceRange(@RequestParam Integer minValue, @RequestParam Integer maxValue,
+			Model model) {
+		try {
+//			get side-bar drop-down all category from database
+			List<Category> allCategory = this.categoryService.getAllCategory();
+			model.addAttribute("category", allCategory);
+			
+			List<Product> products = this.productService.searchProductsByPriceRange(minValue, maxValue);
+			model.addAttribute("AllProduct", products);
+			return "product";
+		} catch (Exception e) {
+			return "404";
+		}
+	}
+
+//	search product by Discount
+	@GetMapping("/searchProductByDiscount")
+	public String searchProductByDiscount(@RequestParam Integer minDiscount, @RequestParam Integer maxDiscount, Model model) {
+		try {
+//			get side-bar drop-down all category from database
+			List<Category> allCategory = this.categoryService.getAllCategory();
+			model.addAttribute("category", allCategory);
+			
+			List<Product> searchProductsByDiscount = this.productService.searchProductsByDiscount(minDiscount, maxDiscount);
+			model.addAttribute("AllProduct", searchProductsByDiscount);
+			return "product";
+		} catch (Exception e) {
+			return "404";
+		}
+		
+	}
+	
 //	 Handler For product page 
 //	@GetMapping("/product")
 //	public String products(Model model) {
@@ -252,9 +286,5 @@ public class HomeController {
 	public String testimonial() {
 		return "testimonial";
 	}
-	
 
-	
-	
-	
 }

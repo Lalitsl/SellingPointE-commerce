@@ -52,49 +52,81 @@
 			<div class="" style="width:15%; height: 700px; background-color: #e2e2e2;">
 				<div class="m-1">
 					<p class="fw-bold"> Product Filters </p>
+					<form id="searchForm" th:action="@{/searchProductsByPrice}" method="get">
+						<div id="filterProductRadio" class="mt-2">
+							<span class="fw-bold">* Price range</span>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault1" th:value="0-1000"
+									th:onclick="updatePriceRange(0, 1000)">
+								<label class="form-check-label" for="flexRadioDefault1">0-1000</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault2"
+									th:value="1000-10000" th:onclick="updatePriceRange(1000, 10000)">
+								<label class="form-check-label" for="flexRadioDefault2">1000-10,000</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault3"
+									th:value="10000-100000" th:onclick="updatePriceRange(10000, 100000)">
+								<label class="form-check-label" for="flexRadioDefault3">10,000-1,00,000</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault4"
+									th:value="100000" th:onclick="updatePriceRange(100000, 1000000)">
+								<label class="form-check-label" for="flexRadioDefault4">Above 1,00,000</label>
+							</div>
+						</div>
+						<!-- Hidden input fields for minValue and maxValue -->
+						<input type="hidden" id="minValueInput" name="minValue">
+						<input type="hidden" id="maxValueInput" name="maxValue">
+					</form>
+
+					<script th:inline="javascript">
+						function updatePriceRange(minValue, maxValue) {
+							document.getElementById("minValueInput").value = minValue;
+							document.getElementById("maxValueInput").value = maxValue;
+							document.getElementById("searchForm").submit();
+						}
+					</script>
+
+
 					<div class="mt-2">
-						<span class="fw-bold"> * Price range </span>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-							<label class="form-check-label" for="flexRadioDefault1">0-1000</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-							<label class="form-check-label" for="flexRadioDefault2">1000-10,000</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-							<label class="form-check-label" for="flexRadioDefault3">10,000-1,00,000 </label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
-							<label class="form-check-label" for="flexRadioDefault4">Above 1,00,000</label>
-						</div>
+						<form id="searchForm1" th:action="@{/searchProductByDiscount}" method="get">
+							<div id="filterProductRadio" class="mt-2">
+								<span class="fw-bold"> * Discount </span>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" id="flexRadioDefault5" 
+										th:value="0-3" th:onclick="updateDiscountRange(0,3)">
+									<label class="form-check-label" for="flexRadioDefault5">0% - 3%</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" id="flexRadioDefault6" 
+										th:value="3-5" th:onclick="updateDiscountRange(3,5)">
+									<label class="form-check-label" for="flexRadioDefault6">3% - 5%</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" id="flexRadioDefault7" 
+										th:value="5-7" th:onclick="updateDiscountRange(5,7)">
+									<label class="form-check-label" for="flexRadioDefault7">5% - 7%</label>
+								</div>
+								
+							<!-- Hidden input fields for minValue and maxValue -->
+							<input type="hidden" id="minDiscountInput" name="minDiscount">
+							<input type="hidden" id="maxDiscountInput" name="maxDiscount">
+						</form>
+
+						<script th:inline="javascript">
+							function updateDiscountRange(minDiscount, maxDiscount) {
+								document.getElementById("minDiscountInput").value = minDiscount;
+								document.getElementById("maxDiscountInput").value = maxDiscount;
+								document.getElementById("searchForm1").submit();
+							}
+						</script>
 					</div>
-					
-					<div class="mt-2">
-						<span class="fw-bold"> * Discount </span>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-							<label class="form-check-label" for="flexRadioDefault1">0% - 3%</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-							<label class="form-check-label" for="flexRadioDefault2">3% - 5%</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
-							<label class="form-check-label" for="flexRadioDefault3">5% - 7%</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
-							<label class="form-check-label" for="flexRadioDefault4">7% - 10%</label>
-						</div>
-					</div>
-					
+
 				</div>
 			</div>
-
+			</div>
 
 
 
@@ -139,7 +171,7 @@
 						</button>
 					</div>
 					<div class="row">
-						<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3">
+						<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3" id="productResults">
 							<div class="box">
 								<div class="img-box">
 									<a th:href="@{/productDetailsPageById/{id}(id=${prod.productId})}"><img
@@ -169,7 +201,6 @@
 				</div>
 			</section>
 			<!-- end product section -->
-
 		</div>
 
 	</section>

@@ -1301,3 +1301,8 @@ https://preview.hasthemes.com/xoss-preview/xoss/index.html
 }
 
 /* ====== navbar search box code end here   ======*/
+
+
+#filterProductRadio input{
+	padding: 8px 8px;
+}

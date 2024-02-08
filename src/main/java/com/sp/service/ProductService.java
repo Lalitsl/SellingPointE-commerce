@@ -57,12 +57,16 @@ public class ProductService {
 		
 	}
 	
-//	search all products by price range
-	public List<Product> searchAllProductByProductPrice(Double productPrice){
-		return productRepository.findAllByProductPriceContaining(productPrice);
-		
-	}
+//	search all products by price range	
+	 public List<Product> searchProductsByPriceRange(int i, int j) {
+	        return productRepository.findAllByProductPriceBetween(i, j);
+	    }
 	
+//		search all products by price range	
+		 public List<Product> searchProductsByDiscount(int minDiscount, int maxDiscount) {
+		        return productRepository.findAllByDiscountBetween(minDiscount , maxDiscount);
+		    }
+		
 	
 
 }
