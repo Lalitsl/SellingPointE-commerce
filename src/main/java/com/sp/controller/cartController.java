@@ -53,18 +53,20 @@ public class cartController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		m.addAttribute("category", allCategory);
-		
+
 //		cart calculationSSS
-		if (GlobalData.cart.isEmpty()) {	
+		if (GlobalData.cart.isEmpty()) {
 // 		Cart is empty, set a message
 			m.addAttribute("cartEmptyMessage", "Cart is empty. Please add items to the cart.");
 			m.addAttribute("Shipping", 0);
 			m.addAttribute("otherValue", 0);
 			m.addAttribute("total", 0);
-			
+
 		} else {
 			m.addAttribute("cartCount", GlobalData.cart.size());
-			m.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
+			m.addAttribute("total", GlobalData.cart.stream().mapToDouble(
+					product -> product.getProductPrice() - (product.getProductPrice() * (product.getDiscount() / 100)))
+					.sum());
 			m.addAttribute("cart", GlobalData.cart);
 			// generate random values for shipping and other fees
 //	        Random random = new Random();
@@ -76,8 +78,7 @@ public class cartController {
 		}
 		return "/User/cartHomePage";
 	}
-    
-    
+
 	@GetMapping("/addToCart/{id}")
 	private String addToCart(@PathVariable int id, Model model) {
 		Optional<Product> productOptional = productService.getProductById(id);
@@ -94,8 +95,9 @@ public class cartController {
 				// Save the updated product to the database
 				productService.addProduct(product);
 				// Add the product to the cart
+				System.out.println("GetDISCOUNT :::: " + productOptional.get().getDiscount());
 				GlobalData.cart.add(product);
-				    
+
 				// Redirect to the cart page
 				return "redirect:/cart/cartHomePage";
 			} else {
@@ -111,33 +113,32 @@ public class cartController {
 	}
 
 	@PostMapping("/updateQuantity1")
-    public String updateQuantity1(@ModelAttribute("cartItem") CartItem cartItem) {
-        // Retrieve the product from the database
-        Optional<Product> productOptional = productService.getProductById(cartItem.getProductId());
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            // Update the product quantity
-            product.setQuantity(cartItem.getProductQuantity());
-            // Save the updated product to the database
-            productService.addProduct(product);
-            // Redirect to the cart page
-            return "redirect:/cart/cartHomePage";
-        } else {
-            // Product not found so redirect to an error page
-            return "404";
-        }
-    }
-	
-	@GetMapping("/updateQuantity")
-	@ResponseBody
-	public String updateQuantity(@RequestParam("newQuantity") int newQuantity,Model model) {
-	    // Update the setProductQuantity attribute in the model
-	    // You may also want to update the quantity in the database or cart
-	    model.addAttribute("setProductQuantity", newQuantity);
-	    // Return a response if needed
-	    return "Quantity updated successfully";
+	public String updateQuantity1(@ModelAttribute("cartItem") CartItem cartItem) {
+		// Retrieve the product from the database
+		Optional<Product> productOptional = productService.getProductById(cartItem.getProductId());
+		if (productOptional.isPresent()) {
+			Product product = productOptional.get();
+			// Update the product quantity
+			product.setQuantity(cartItem.getProductQuantity());
+			// Save the updated product to the database
+			productService.addProduct(product);
+			// Redirect to the cart page
+			return "redirect:/cart/cartHomePage";
+		} else {
+			// Product not found so redirect to an error page
+			return "404";
+		}
 	}
 
+	@GetMapping("/updateQuantity")
+	@ResponseBody
+	public String updateQuantity(@RequestParam("newQuantity") int newQuantity, Model model) {
+		// Update the setProductQuantity attribute in the model
+		// You may also want to update the quantity in the database or cart
+		model.addAttribute("setProductQuantity", newQuantity);
+		// Return a response if needed
+		return "Quantity updated successfully";
+	}
 
 //	Remove product from cart 
 	@GetMapping("/removeItem/{index}")
@@ -152,7 +153,9 @@ public class cartController {
 //		get side-bar drop-down all category from database
 		List<Category> allCategory = this.categoryService.getAllCategory();
 		model.addAttribute("category", allCategory);
-		model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
+		model.addAttribute("total", GlobalData.cart.stream().mapToDouble(
+				product -> product.getProductPrice() - (product.getProductPrice() * (product.getDiscount() / 100)))
+				.sum());
 		model.addAttribute("Shipping", 30);
 		model.addAttribute("otherValue", 40);
 		return "/User/checkoutItem";
@@ -174,14 +177,17 @@ public class cartController {
 //		 creating new order
 		Order order = client.orders.create(ob);
 		System.out.println(order);
-		System.out.println("ORDER : "+order.toString());
-		return order.toString();	
+		System.out.println("ORDER : " + order.toString());
+		return order.toString();
+	}
+	
+//	product Rating module 
+	@GetMapping("/productRating")
+	public String productRating() {
+		return "404";
 		
 	}
-
-
 	
 	
+
 }
-
-

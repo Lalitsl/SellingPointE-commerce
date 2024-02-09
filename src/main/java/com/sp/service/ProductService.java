@@ -62,12 +62,15 @@ public class ProductService {
 	        return productRepository.findAllByProductPriceBetween(i, j);
 	    }
 	
-//		search all products by price range	
-		 public List<Product> searchProductsByDiscount(int minDiscount, int maxDiscount) {
-		        return productRepository.findAllByDiscountBetween(minDiscount , maxDiscount);
-		    }
+//	search all products by price range	
+	 public List<Product> searchProductsByDiscount(int minDiscount, int maxDiscount) {
+	        return productRepository.findAllByDiscountBetween(minDiscount , maxDiscount);
+	    }
 		
-	
+//	search all products by product Company names
+	public List<Product> searchProductsByProductCompanyName(String productCompanyName){
+		return productRepository.findAllByProductCompanyName(productCompanyName);
+	}
 
 }
 

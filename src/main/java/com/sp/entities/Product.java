@@ -29,7 +29,7 @@ public class Product {
 	private Double productPrice;
 	private int quantity;
 	private String productImage;
-	private int discount;
+	private double discount;
 	private String Option1;
 	private String Option2;
 	private String Option3;
@@ -49,4 +49,5 @@ public class Product {
 //	@JoinColumn(name = "subCategoryId", referencedColumnName = "subCategoryId")
 //	SubCategory subCategory;
 
+	 
 }

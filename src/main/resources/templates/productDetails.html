@@ -14,7 +14,6 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="full">
-							<!--<h3 th:text="${{category01.categoryname}+' Products'}">  </h3>-->
 							<h3> Product Details Page </h3>
 						</div>
 					</div>
@@ -22,11 +21,6 @@
 			</div>
 		</section>
 		<!-- end inner page section -->
-
-
-
-
-
 
 		<!-- product section -->
 		<section class="product_section layout_padding">
@@ -37,6 +31,46 @@
 							<div class="img-box">
 								<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
 							</div>
+							<div class="mt-3">
+								<div class="rating-stars">
+									<i class="fa-regular fa-star fa-xl text-warning"></i>
+									<i class="fa-regular fa-star fa-xl text-warning"></i>
+									<i class="fa-regular fa-star fa-xl text-warning"></i>
+									<i class="fa-regular fa-star fa-xl text-warning"></i>
+									<i class="fa-regular fa-star fa-xl text-warning"></i>
+								</div>
+							</div>
+
+							<div>
+								<span id="averageRating"></span>
+							</div>
+							<script th:inline="javascript">
+								var ratings = [];
+								document.addEventListener('DOMContentLoaded', function () {
+									var stars = document.querySelectorAll('.rating-stars i');
+									stars.forEach(function (star, index) {
+										star.addEventListener('click', function () {
+											if (star.classList.contains('text-warning')) {
+												star.classList.remove('text-warning');
+												ratings[index] = 0;
+											} else {
+												star.classList.add('text-warning');
+												ratings[index] = index + 1;
+											}
+											var averageRating = calculateAverageRating(ratings);
+											document.getElementById('averageRating').innerText = 'Average Rating: ' + averageRating;
+										});
+									});
+								});
+
+								function calculateAverageRating(ratings) {
+									var sum = ratings.reduce(function (acc, rating) {
+										return acc + rating;
+									}, 0);
+
+									return sum / ratings.length;
+								}
+							</script>
 						</div>
 					</div>
 					<div th:each="prod:${product01}" class="col-sm-6 col-md-4 col-lg-8">
@@ -50,7 +84,8 @@
 						<div class="mx-2">
 							<a th:if="${prod.quantity > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
 								class="redbtn p-2">Add To Cart</a>
-							<a th:if="${prod.quantity == 0}" class="p-2" style="pointer-events: none; background-color: red; color: white;">Out
+							<a th:if="${prod.quantity == 0}" class="p-2"
+								style="pointer-events: none; background-color: red; color: white;">Out
 								of
 								Stock</a>
 							<a th:href="@{/cart/cartHomePage}" class="blackbtn p-2 px-3 mx-2">Buy Now</a>

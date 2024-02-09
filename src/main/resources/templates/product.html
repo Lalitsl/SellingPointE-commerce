@@ -49,9 +49,11 @@
 
 
 		<div class="row">
-			<div class="" style="width:15%; height: 700px; background-color: #e2e2e2;">
+			<div style="width:15%; height: 700px; background-color: #e2e2e2;">
 				<div class="m-1">
 					<p class="fw-bold"> Product Filters </p>
+
+					<!-- products filter according to Price range -->
 					<form id="searchForm" th:action="@{/searchProductsByPrice}" method="get">
 						<div id="filterProductRadio" class="mt-2">
 							<span class="fw-bold">* Price range</span>
@@ -71,12 +73,11 @@
 								<label class="form-check-label" for="flexRadioDefault3">10,000-1,00,000</label>
 							</div>
 							<div class="form-check">
-								<input class="form-check-input" type="radio" id="flexRadioDefault4"
-									th:value="100000" th:onclick="updatePriceRange(100000, 1000000)">
+								<input class="form-check-input" type="radio" id="flexRadioDefault4" th:value="100000"
+									th:onclick="updatePriceRange(100000, 1000000)">
 								<label class="form-check-label" for="flexRadioDefault4">Above 1,00,000</label>
 							</div>
 						</div>
-						<!-- Hidden input fields for minValue and maxValue -->
 						<input type="hidden" id="minValueInput" name="minValue">
 						<input type="hidden" id="maxValueInput" name="maxValue">
 					</form>
@@ -89,48 +90,57 @@
 						}
 					</script>
 
-
-					<div class="mt-2">
-						<form id="searchForm1" th:action="@{/searchProductByDiscount}" method="get">
-							<div id="filterProductRadio" class="mt-2">
-								<span class="fw-bold"> * Discount </span>
-								<div class="form-check">
-									<input class="form-check-input" type="radio" id="flexRadioDefault5" 
-										th:value="0-3" th:onclick="updateDiscountRange(0,3)">
-									<label class="form-check-label" for="flexRadioDefault5">0% - 3%</label>
-								</div>
-								<div class="form-check">
-									<input class="form-check-input" type="radio" id="flexRadioDefault6" 
-										th:value="3-5" th:onclick="updateDiscountRange(3,5)">
-									<label class="form-check-label" for="flexRadioDefault6">3% - 5%</label>
-								</div>
-								<div class="form-check">
-									<input class="form-check-input" type="radio" id="flexRadioDefault7" 
-										th:value="5-7" th:onclick="updateDiscountRange(5,7)">
-									<label class="form-check-label" for="flexRadioDefault7">5% - 7%</label>
-								</div>
-								
-							<!-- Hidden input fields for minValue and maxValue -->
+					<!-- products filter according to Discount -->
+					<form id="searchForm1" th:action="@{/searchProductByDiscount}" method="get">
+						<div id="filterProductRadio" class="mt-2">
+							<span class="fw-bold"> * Discount </span>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault5" th:value="0-3"
+									th:onclick="updateDiscountRange(0,3)">
+								<label class="form-check-label" for="flexRadioDefault5">0% - 3%</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault6" th:value="3-5"
+									th:onclick="updateDiscountRange(3,5)">
+								<label class="form-check-label" for="flexRadioDefault6">3% - 5%</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" id="flexRadioDefault7" th:value="5-7"
+									th:onclick="updateDiscountRange(5,7)">
+								<label class="form-check-label" for="flexRadioDefault7">5% - 7%</label>
+							</div>
 							<input type="hidden" id="minDiscountInput" name="minDiscount">
 							<input type="hidden" id="maxDiscountInput" name="maxDiscount">
-						</form>
+						</div>
+					</form>
+					<script th:inline="javascript">
+						function updateDiscountRange(minDiscount, maxDiscount) {
+							document.getElementById("minDiscountInput").value = minDiscount;
+							document.getElementById("maxDiscountInput").value = maxDiscount;
+							document.getElementById("searchForm1").submit();
+						}
+					</script>
 
-						<script th:inline="javascript">
-							function updateDiscountRange(minDiscount, maxDiscount) {
-								document.getElementById("minDiscountInput").value = minDiscount;
-								document.getElementById("maxDiscountInput").value = maxDiscount;
-								document.getElementById("searchForm1").submit();
-							}
-						</script>
-					</div>
-
+					<!-- products filter according to Product Company Names -->
+					<form id="searchForm2" th:action="@{/searchProductByProductCompanyName}" method="get">
+						<span class="fw-bold"> * Company Names </span>
+						<div id="filterProductRadio" class="mt-2">
+							<div class="form-check" th:each="prod:${AllProduct}">
+								<input class="form-check-input" type="radio" id="flexRadioDefault5"
+									name="productCompanyName" th:value="${prod.productCompanyName}"
+									th:onclick="updateproductCompnayName()">
+								<label class="form-check-label" for="flexRadioDefault5"
+									th:text="${prod.productCompanyName}"></label>
+							</div>
+						</div>
+					</form>
+					<script th:inline="javascript">
+						function updateproductCompnayName() {
+							document.getElementById("searchForm2").submit();
+						}
+					</script>
 				</div>
 			</div>
-			</div>
-
-
-
-
 
 			<!-- product section -->
 			<section class="product_section layout_padding" style="width:85%;">
@@ -173,19 +183,42 @@
 					<div class="row">
 						<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3" id="productResults">
 							<div class="box">
+								<div
+									style="background-image: url(/images/discount.png); width: 70px; height: 70px; background-size: cover; float: right; margin-right: -10px; transform: translateY(-10px);">
+									<h4 class="pt-4 fw-bold"
+										th:text="${#numbers.formatDecimal(prod.discount, 0, 'COMMA', 0, 'POINT')}"
+										style="transform: translateX(20px);"></h4>
+								</div>
 								<div class="img-box">
 									<a th:href="@{/productDetailsPageById/{id}(id=${prod.productId})}"><img
 											th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image"></a>
 								</div>
 								<div class="detail-box">
 									<h5 th:text="${prod.productName}">T.V.</h5>
-									<h6 th:text="${prod.productPrice}">$75</h6>
+									<div class="d-flex gap-1" th:if="${prod.discount != null}">
+										<h6 class="text-success"
+											th:text="${prod.productPrice - (prod.productPrice * prod.discount / 100)}">
+										</h6>
+										<del>
+											<h6 th:text="${prod.productPrice}">$75</h6>
+										</del>
+									</div>
 								</div>
 								<p class="pt-2" th:text="${prod.productDescription}"></p>
 								<p th:if="${prod.quantity == 0}" class="text-danger fw-bold">Product Out of Stock</p>
 								<p th:if="${prod.quantity > 0 && prod.quantity < 10}" class="text-warning">Hurry up!
 									Limited stock available</p>
 								<p>Product Quantity : <span class="pt-2" th:text="${prod.quantity}"></span></p>
+
+								<!-- Calculate discounted price -->
+								<div th:if="${prod.discount != null}">
+									<p>Discounted Price: <span
+											th:text="${prod.productPrice - (prod.productPrice * prod.discount / 100)}"></span>
+									</p>
+									</p>
+									<p>Discount Value: <span th:text="${prod.discount}"></span></p>
+								</div>
+
 								<div class="">
 									<a th:if="${prod.quantity > 0}"
 										th:href="@{/cart/addToCart/{id}(id=${prod.productId})}" class="redbtn p-1">Add

@@ -60,9 +60,14 @@
 													type="button" class="redbtn p-1 rounded"><i
 														class="fas fa-trash-alt mr-1"></i> Remove item </a>
 											</div>
-											<p class="mb-0"><span><strong>₹ <span
-															th:text="${item.productPrice}"></span></strong></span>
-											</p>
+											<div class="d-flex gap-1" th:if="${item.discount != null}">
+												<h6 class="text-success"
+													th:text="${item.productPrice - (item.productPrice * item.discount / 100)}">
+												</h6>
+												<del>
+													<h6 th:text="${item.productPrice}">$75</h6>
+												</del>
+											</div>
 										</div>
 										<div th:if="${paymentSuccessful}">
 											<div class="mt-3">
@@ -114,7 +119,9 @@
 											<p class="mb-0">(including VAT)</p>
 										</strong>
 									</div>
-									<span><strong>₹<span th:text="${total}+${Shipping}+${otherValue}"></span></strong></span>
+									<span><strong>₹<span
+												th:text="${#numbers.formatDecimal(total + Shipping + otherValue, 0, 'COMMA', 0, 'POINT')}"></span></strong></span>
+
 
 								</li>
 							</ul>

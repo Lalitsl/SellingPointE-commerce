@@ -170,8 +170,19 @@ public class HomeController {
 		} catch (Exception e) {
 			return "404";
 		}
-		
 	}
+	
+//	search product by Product Company names
+	@GetMapping("/searchProductByProductCompanyName")
+	public String searchProductByProductCompanyName(@RequestParam String productCompanyName, Model model) {
+//		get side-bar drop-down all category from database
+		List<Category> allCategory = this.categoryService.getAllCategory();
+		model.addAttribute("category", allCategory);
+		List<Product> searchProductsByProductCompanyName = this.productService.searchProductsByProductCompanyName(productCompanyName);
+		model.addAttribute("AllProduct", searchProductsByProductCompanyName);
+		return "product";
+	}
+	
 	
 //	 Handler For product page 
 //	@GetMapping("/product")

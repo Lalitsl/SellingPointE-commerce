@@ -69,7 +69,8 @@
 											<p class="mb-0">(including All Tax & Gst)</p>
 										</strong>
 									</div>
-									<p id="paymentFeild" class="fw-bold">₹ <span th:text="${total}  + ${Shipping} + ${otherValue}"></span>
+									<p id="paymentFeild" class="fw-bold">₹ <span
+												th:text="${#numbers.formatDecimal(total + Shipping + otherValue, 0, 'COMMA', 0, 'POINT')}"></span>
 									</p>
 								</li>
 							</ul>
