@@ -123,41 +123,57 @@
 										closeAllLists(e.target);
 									});
 								}
-								var products = ["Laptop", "Lap", "TV" , "shirt", "mobile"];
+								var products = ["Laptop", "Lap", "TV", "shirt", "mobile"];
 								autocomplete(document.getElementById("myInput"), products);
 							</script>
 						</li>
 
 						<li class="nav-item active">
-							<a class="nav-link mx-2" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+							<a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link mx-2" th:href="@{/product}">Products</a>
+							<a class="nav-link" th:href="@{/product}">Products</a>
 						</li>
-
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/cart/cartHomePage}">
 								<span th:text="${cartCount}">01</span>
 								<i class="fa-solid fa-cart-shopping fa-xl"></i>
 							</a>
 						</li>
+						<!--	<li class="nav-item">
+							<a class="nav-link" th:href="@{/cart/productLikePage}">
+								<span th:text="${cartCount}">01</span>
+								<i class="fa-solid fa-heart fa-xl text-danger"></i>
+							</a>
+						</li>  -->
 
 						<!-- Check if the user is authenticated -->
 						<div th:if="${#authorization.expression('isAuthenticated()')}">
-							<div class="dropdown mt-2">
-								<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle p-2 m-5"
-									id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
-									style="border-radius: 50%;"><i class="fa-solid fa-circle-user fa-2xl"
-										style="color:#f7444e;"></i></a>
-								<!--th:text="${user.email.substring(0, 1).toUpperCase()}"-->
-								<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1"
-									style="transform: translateX(-50px);">
-									<li><a class="dropdown-item fw-bold"
-											th:href="@{/user/changeUserPassword}">Change-Password</a></li>
-									<hr>
-									<li><a type="button" class="dropdown-item redbtn fw-bold"
-											th:href="@{/logout}">Logout</a></li>
-								</ul>
+							<!-- Check if the user has the role 'USER' -->
+							<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+								<div class="dropdown mt-2">
+									<a th:href="@{/user/showAllContacts/0}" class="dropdown-toggle m-4"
+										id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
+										style="border-radius: 50%;">
+										<i class="fa-solid fa-circle-user fa-2xl" style="color:#f7444e;"></i>
+									</a>
+									<ul class="dropdown-menu text-dark" aria-labelledby="dropdownMenuButton1"
+										style="transform: translateX(-50px);">
+										<li><a class="dropdown-item fw-bold"
+												th:href="@{/user/changeUserPassword}">Change Password</a></li>
+										<hr>
+										<li><a type="button" class="dropdown-item redbtn fw-bold"
+												th:href="@{/logout}">Logout</a></li>
+									</ul>
+								</div>
+							</div>
+							<!-- Check if the user has the role 'ADMIN' -->
+							<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+								<!-- Add logic for displaying admin-specific content here -->
+								<div class="mt-2 mx-2">
+									<a th:href="@{/admin}" type="button" class="btn text-light"
+										style="background:#f7444e;">Admin</a>
+								</div>
 							</div>
 						</div>
 
@@ -321,11 +337,16 @@
 	<!-- jQery -->
 	<!-- popper js -->
 	<!-- bootstrap js -->
-	<!--<script th:src="@{js/popper.min.js}"></script>-->
-
+	<!--<script th:src="@{js/popper.min.js}"></script>
 	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	-->
+
+
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 
 
 

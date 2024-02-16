@@ -163,29 +163,40 @@
 				</button>
 			</div>
 			<div class="row">
-				<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3">
+				<div th:each="prod:${AllProduct}" class="col-sm-6 col-md-4 col-lg-3" id="productResults">
 					<div class="box">
+						<div
+							style="background-image: url(/images/discount.png); width: 70px; height: 70px; background-size: cover; float: right; margin-right: -10px; transform: translateY(-10px);">
+							<h4 class="pt-4 fw-bold"
+								th:text="${#numbers.formatDecimal(prod.discount, 0, 'COMMA', 0, 'POINT')}"
+								style="transform: translateX(20px);"></h4>
+						</div>
 						<div class="img-box">
 							<a th:href="@{/productDetailsPageById/{id}(id=${prod.productId})}"><img
 									th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image"></a>
 						</div>
 						<div class="detail-box">
 							<h5 th:text="${prod.productName}">T.V.</h5>
-							<h6 th:text="${prod.productPrice}">$75</h6>
+							<div class="d-flex gap-1" th:if="${prod.discount != null}">
+								<h6 class="text-success"
+									th:text="${prod.productPrice - (prod.productPrice * prod.discount / 100)}">
+								</h6>
+								<del>
+									<h6 th:text="${prod.productPrice}">$75</h6>
+								</del>
+							</div>
 						</div>
 						<p class="pt-2" th:text="${prod.productDescription}"></p>
 						<p th:if="${prod.quantity == 0}" class="text-danger fw-bold">Product Out of Stock</p>
-						<p th:if="${prod.quantity > 0 && prod.quantity < 10}" class="fw-bold text-warning">Hurry up!
-							Limited
-							stock available</p>
-						<p>Product Stock: <span class="pt-2" th:text="${prod.quantity}"></span></p>
+						<p th:if="${prod.quantity > 0 && prod.quantity < 10}" class="text-warning">Hurry up!
+							Limited stock available</p>
 						<div class="mx-2">
 							<a th:if="${prod.quantity > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"
-								class="redbtn p-2">Add To Cart</a>
-							<a th:if="${prod.quantity == 0}" class="p-2"
-								style="pointer-events: none; background-color: red; color: white;">Out of
+								class="redbtn p-1">Add To Cart</a>
+							<a th:if="${prod.quantity == 0}" class="p-1"
+								style="pointer-events: none; background-color: red; color:white;">Out of
 								Stock</a>
-							<a th:href="@{/cart/cartHomePage}" class="blackbtn p-2 px-3 mx-2">Buy Now</a>
+							<a th:href="@{/cart/cartHomePage}" class="blackbtn p-1 px-2 mx-2">Buy Now</a>
 						</div>
 					</div>
 				</div>

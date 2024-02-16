@@ -56,7 +56,8 @@ const paymentStart = () => {
 	console.log("payment started........");
 	let amountText = $("#paymentFeild").text().trim(); // Get the text and remove leading/trailing whitespaces
 	let amount = parseInt(amountText.replace("₹", "").replace(",", "")); // Remove currency symbol and commas
-	console.log("PRODUCT AMOUNT: " + amount);
+	 let quantity = parseInt($("#quantity").text().trim()); // Get the quantity value
+	console.log("PRODUCT QUANTITY: " + quantity);
 	if (isNaN(amount)) {
 		Swal.fire({
 			icon: "error",
@@ -64,85 +65,99 @@ const paymentStart = () => {
 		});
 		return;
 	}
-	//    we will use ajax to send request to server to create order - using jquery
-	$.ajax(
-		{
-			url: '/cart/createOrder',
-			data: JSON.stringify({ amount: amount, info: 'order_request' }),
-			contentType: 'application/json',
-			type: 'POST',
-			dataType: 'json',
-			success: function(Response) {
-				// invoked when success
-				console.log(Response);
-				if (Response.status == 'created') {
-					// open payment form 
-					let options = {
-						key: 'rzp_test_SjOHuxyf14nY18',
-						amount: Response.amount,
-						currency: 'INR',
-						name: 'Selling point e-commerce',
-						description: "payment for you want to buy product ",
-						image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmszu1ixKHES9xBpI52IIWxe7g6pyAYIgK4uD6xB1VTfwcgR4547fnj_lWZX_GdvDFhrY&usqp=CAU',
-						order_id: Response.id,
-						handler: function(response) {
-							console.log(response.razorpay_payment_id)
-							console.log(response.razorpay_order_id)
-							console.log(response.razorpay_signature)
-							console.log("payment successfull ...")
-							//  payment success message code start  
-							Swal.fire({
-								position: "top-end",
-								icon: "success",
-								title: "Congratulation...... payment success",
-								showConfirmButton: false,
-								timer: 3000
-							});
-							//  payment success message code end  
-						},
-						prefill: {
-							"name": "",
-							"email": "",
-							"contact": ""
-						},
-						"notes": {
-							"address": "SELLING POINT TEAM CREATE PROJECT FOR LEARNING PURPOSE."
-						},
-						"theme": {
-							"color": "#3399cc"
-						}
-					};
 
-					let rzp = new Razorpay(options);
-					rzp.on('payment.failed', function(response) {
-						console.log(response.error.code);
-						console.log(response.error.description);
-						console.log(response.error.source);
-						console.log(response.error.step);
-						console.log(response.error.reason);
-						console.log(response.error.metadata.order_id);
-						console.log(response.error.metadata.payment_id);
-						//  payment failed message code start 
-						Swal.fire({
-							icon: "error",
-							title: "Payment Failed !!!",
-							text: "Something went wrong!",
-						});
-						//	  payment failed message code end 
-					});
-					rzp.open()
-				}
-			},
-			error: function(error) {
-				// invoked when error 
-				console.log(error);
-				Swal.fire("Something went wrong !!! ");
+	// We will use AJAX to send request to server to create order - using jQuery
+	$.ajax({
+		url: '/cart/createOrder',
+		data: JSON.stringify({ amount: amount, info: 'order_request' }),
+		contentType: 'application/json',
+		type: 'POST',
+		dataType: 'json',
+		success: function(response) {
+			// Invoked when success
+			console.log(response);
+			if (response.status == 'created') {
+				// Open payment form 
+				let options = {
+					key: 'rzp_test_SjOHuxyf14nY18',
+					amount: response.amount,
+					currency: 'INR',
+					name: 'Selling point e-commerce',
+					description: "Payment for the product you want to buy",
+					image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmszu1ixKHES9xBpI52IIWxe7g6pyAYIgK4uD6xB1VTfwcgR4547fnj_lWZX_GdvDFhrY&usqp=CAU',
+					order_id: response.id,
+					handler: function(response) {
+						console.log(response.razorpay_payment_id)
+						console.log(response.razorpay_order_id)
+						console.log(response.razorpay_signature)
+						console.log("Payment successful ...")
+						updatePaymentOnServer(response.razorpay_payment_id, response.razorpay_order_id, 'paid',quantity);
+					},
+					prefill: {
+						"name": "",
+						"email": "",
+						"contact": ""
+					},
+					"notes": {
+						"address": "SELLING POINT TEAM CREATE PROJECT FOR LEARNING PURPOSE."
+					},
+					"theme": {
+						"color": "#3399cc"
+					}
+				};
+
+				let rzp = new Razorpay(options);
+				rzp.on('payment.failed', function(response) {
+					console.log(response.error.code);
+					console.log(response.error.description);
+					console.log(response.error.source);
+					console.log(response.error.step);
+					console.log(response.error.reason);
+					console.log(response.error.metadata.order_id);
+					console.log(response.error.metadata.payment_id);
+
+				});
+				rzp.open()
 			}
+		},
+		error: function(xhr, status, error) {
+			// Invoked when error 
+			console.log(xhr.responseText);
+			Swal.fire({
+				icon: "error",
+				title: "Something went wrong !!!",
+				text: xhr.responseText,
+			});
 		}
-	)
-
+	});
 };
 
+
+function updatePaymentOnServer(payment_id, order_id, status,quantity) {
+	$.ajax({
+		url: '/cart/updateOrder',
+		data: JSON.stringify({ payment_id: payment_id, order_id: order_id, status: status, quantity: quantity }),
+		contentType: 'application/json',
+		type: 'POST',
+		dataType: 'json',
+		success: function(response) {
+			Swal.fire({
+				position: "top-end",
+				icon: "success",
+				title: "Done ... payment successfully completed ",
+				showConfirmButton: false,
+				timer: 3000
+			});
+		},
+		error: function(error) {
+			Swal.fire({
+				icon: "error",
+				title: "Payment Failed !!!",
+				text: " your payment successfull but we can't capture it . we will contact you as soon as possible !!!",
+			});
+		}
+	})
+}
 /* ============================ */
 
 // First request to server to create order
@@ -295,14 +310,13 @@ addBtn.addEventListener("click", addInput);
 
 // dynamic Field creation on form [js code end here ]
 
-// navbar search box suggetion code start here 
+
+
+// 	=====  product quantity increase and decrease js code start here  =====
 
 
 
-// navbar search box suggetion code end here 
-
-
-
+// 	=====  product quantity increase and decrease js code end here  =====
 
 
 

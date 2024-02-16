@@ -193,6 +193,68 @@
 									<a th:href="@{/productDetailsPageById/{id}(id=${prod.productId})}"><img
 											th:src="@{${'/images/upload/'+prod.productImage}}" alt="product Image"></a>
 								</div>
+								<!--<div class="d-flex" style="float: right; margin-top: -30px;">
+									<a th:href="@{/productLikePage(productId)}" th:if="${productLiked}">
+										<i class="fa-solid fa-heart fa-xl text-danger"></i>
+									</a>
+									<a th:href="@{/cart/productLikePage/{id}(id=${prod.productId})}"
+										th:unless="${productLiked}">
+										<i class="fa-regular fa-heart fa-xl text-danger"></i>
+									</a>
+								</div>-->
+
+								<!-- Product Heart Icon -->
+								<!-- <div class="d-flex" style="float: right; margin-top: -30px;">
+									<a class="likeButton" th:attr="data-product-id=${prod.productId}">
+										<i class="fa-heart fa-xl text-danger fa-regular"></i>
+									</a>
+								</div>-->
+
+
+
+								<!--<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+									integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+									crossorigin="anonymous"></script>
+								<script>
+									$(document).ready(function () {
+										$(".likeButton").click(function (e) {
+											// e.preventDefault();
+											var productId = $(this).data("product-id");
+											console.log("PRODUCT ID : "+ productId);
+											var icon = $(this).find("i");
+
+											// Simulating the toggleLike API call
+											// Replace this with your actual API call
+											// You might need to handle the liked/unliked states from the server response
+											// For demo purposes, let's assume it toggles the icon directly
+											if (icon.hasClass("fa-regular")) {
+												icon.removeClass("fa-regular").addClass("fa-solid");
+												// Send AJAX request to update like status
+												$.get("/cart/productLikePage/" + productId, function (data) {
+													// Handle the response here
+													console.log("Product liked:", data);
+												});
+											} else {
+												icon.removeClass("fa-solid").addClass("fa-regular");
+												// Send AJAX request to update like status
+												$.get("/cart/removeLiked/" + productId, function (data) {
+													// Handle the response here
+													console.log("Product disliked:", data);
+												});
+											}
+
+											// If you want to make an AJAX call to update like status on the server,
+											// you can use $.get or $.post here.
+											// Example:
+											// $.get("/toggleLike/" + productId, function (data) {
+											//     // Handle the response here
+											// });
+										});
+									});
+								</script>-->
+
+
+
 								<div class="detail-box">
 									<h5 th:text="${prod.productName}">T.V.</h5>
 									<div class="d-flex gap-1" th:if="${prod.discount != null}">
@@ -208,25 +270,14 @@
 								<p th:if="${prod.quantity == 0}" class="text-danger fw-bold">Product Out of Stock</p>
 								<p th:if="${prod.quantity > 0 && prod.quantity < 10}" class="text-warning">Hurry up!
 									Limited stock available</p>
-								<p>Product Quantity : <span class="pt-2" th:text="${prod.quantity}"></span></p>
-
-								<!-- Calculate discounted price -->
-								<div th:if="${prod.discount != null}">
-									<p>Discounted Price: <span
-											th:text="${prod.productPrice - (prod.productPrice * prod.discount / 100)}"></span>
-									</p>
-									</p>
-									<p>Discount Value: <span th:text="${prod.discount}"></span></p>
-								</div>
-
-								<div class="">
+								<div class="mx-2" style="font-size: 12px;">
 									<a th:if="${prod.quantity > 0}"
-										th:href="@{/cart/addToCart/{id}(id=${prod.productId})}" class="redbtn p-1">Add
+										th:href="@{/cart/addToCart/{id}(id=${prod.productId})}" class="redbtn p-2">Add
 										To Cart</a>
-									<a th:if="${prod.quantity == 0}" class="p-1"
+									<a th:if="${prod.quantity == 0}" class="p-2"
 										style="pointer-events: none; background-color: red; color: white;">Out of
 										Stock</a>
-									<a th:href="@{/cart/cartHomePage}" class="blackbtn p-1 px-2 mx-2">Buy Now</a>
+									<a th:href="@{/cart/cartHomePage}" class="blackbtn p-2 px-2 mx-2">Buy Now</a>
 								</div>
 							</div>
 						</div>

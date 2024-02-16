@@ -29,57 +29,34 @@
 					<div th:each="prod:${product01}" class="col-sm-6 col-md-4 col-lg-4">
 						<div class="text-center">
 							<div class="img-box">
-								<img th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
-							</div>
-							<div class="mt-3">
-								<div class="rating-stars">
-									<i class="fa-regular fa-star fa-xl text-warning"></i>
-									<i class="fa-regular fa-star fa-xl text-warning"></i>
-									<i class="fa-regular fa-star fa-xl text-warning"></i>
-									<i class="fa-regular fa-star fa-xl text-warning"></i>
-									<i class="fa-regular fa-star fa-xl text-warning"></i>
+								<div
+									style="background-image: url(/images/discount.png); width: 70px; height: 70px; background-size: cover; float: right; margin-right: -10px; transform: translateY(-10px);">
+									<h4 class="pt-4 fw-bold"
+										th:text="${#numbers.formatDecimal(prod.discount, 0, 'COMMA', 0, 'POINT')}"></h4>
 								</div>
+								<img class="w-50" th:src="@{${'/images/upload/'+prod.productImage}}" alt="">
 							</div>
-
-							<div>
-								<span id="averageRating"></span>
-							</div>
-							<script th:inline="javascript">
-								var ratings = [];
-								document.addEventListener('DOMContentLoaded', function () {
-									var stars = document.querySelectorAll('.rating-stars i');
-									stars.forEach(function (star, index) {
-										star.addEventListener('click', function () {
-											if (star.classList.contains('text-warning')) {
-												star.classList.remove('text-warning');
-												ratings[index] = 0;
-											} else {
-												star.classList.add('text-warning');
-												ratings[index] = index + 1;
-											}
-											var averageRating = calculateAverageRating(ratings);
-											document.getElementById('averageRating').innerText = 'Average Rating: ' + averageRating;
-										});
-									});
-								});
-
-								function calculateAverageRating(ratings) {
-									var sum = ratings.reduce(function (acc, rating) {
-										return acc + rating;
-									}, 0);
-
-									return sum / ratings.length;
-								}
-							</script>
 						</div>
 					</div>
 					<div th:each="prod:${product01}" class="col-sm-6 col-md-4 col-lg-8">
 						<div class="detail-box">
 							<h5 th:text="${prod.productName}"></h5>
-							<h6 th:text="${prod.productPrice}"></h6>
+							<div class="d-flex gap-1" th:if="${prod.discount != null}">
+								<h6 class="text-success"
+									th:text="${prod.productPrice - (prod.productPrice * prod.discount / 100)}">
+								</h6>
+								<del>
+									<h6 th:text="${prod.productPrice}">$75</h6>
+								</del>
+							</div>
 							<p class="pt-2" th:text="${prod.productDescription}"></p>
-							<p class="pt-2" th:text="${prod.productCompanyName}"></p>
-							<p class="pt-2" th:text="${prod.productDescription}"></p>
+							<p>Product Company Name : <span class="pt-2" th:text="${prod.productCompanyName}"></span>
+							</p>
+							<p class="pt-2" th:text="${prod.option1}"></p>
+							<p class="pt-2" th:text="${prod.option2}"></p>
+							<p class="pt-2" th:text="${prod.option3}"></p>
+							<p class="pt-2" th:text="${prod.option4}"></p>
+							<p>Product Lunching Date : <span class="pt-2" th:text="${prod.productDate}"></span></p>
 						</div>
 						<div class="mx-2">
 							<a th:if="${prod.quantity > 0}" th:href="@{/cart/addToCart/{id}(id=${prod.productId})}"

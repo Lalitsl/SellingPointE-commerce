@@ -30,9 +30,23 @@
 				<div class="col-lg-8 mb-4">
 					<div class="card shadow-lg wish-list p-3">
 						<div class="card-body">
-							<h5 class="my-3 fw-bold text-center">Extra Address</h5>
 							<div class="row">
-
+								<div class="bg-warning text-center fw-bold p-1"> Details Review </div>
+								<div class="col my-3 p-2">
+									<img src="/images/final_logo1.png" class="w-25 mb-3">
+									<h6>Customer Name : <span th:text="${name}" class=""></span></h6>
+									<h6>Customer Email : <span th:text="${email}" class=""></span></h6>
+									<h6>Customer Phone : <span th:text="${phone}" class=""></span></h6>
+									<h6>Customer Name : <span th:text="${name}" class=""></span></h6>
+									<h6>Product Quantity : <span id="quantity" th:text="${quantity}"></span></h6>
+								</div>
+								<div class="col my-3 p-2">
+									<div class="pt-5">
+										<h6>Postcode : <span th:text="${postcode}" class=""></span></h6>
+										<h6>Country : <span th:text="${country}" class=""></span></h6>
+										<h6>Billing address : <span th:text="${address}" class=""></span></h6>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -70,13 +84,12 @@
 										</strong>
 									</div>
 									<p id="paymentFeild" class="fw-bold">₹ <span
-												th:text="${#numbers.formatDecimal(total + Shipping + otherValue, 0, 'COMMA', 0, 'POINT')}"></span>
+											th:text="${#numbers.formatDecimal(total + Shipping + otherValue, 0, 'COMMA', 0, 'POINT')}"></span>
 									</p>
 								</li>
 							</ul>
 							<button type="submit" class="btn btn-success btn-block waves-effect waves-light w-100"
-								onclick="paymentStart()">Pay
-								Now</button>
+								onclick="paymentStart()">Pay Now</button>
 						</div>
 					</div>
 
