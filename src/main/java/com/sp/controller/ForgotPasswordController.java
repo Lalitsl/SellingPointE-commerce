@@ -37,7 +37,6 @@ public class ForgotPasswordController {
 	}
 
 //	OTP send handler
-
 	@PostMapping("/otpSend")
 	public String sendOTP(@RequestParam("email") String email, HttpSession session) {
 		System.out.println("Email : " + email);

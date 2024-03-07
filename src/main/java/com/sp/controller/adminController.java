@@ -91,7 +91,6 @@ public class adminController {
 		try {
 			this.categoryService.addCategory(category);
 			session.setAttribute("message", new Message("Category added successfully .....", "success"));
-
 			// Schedule a task to remove the session message after a delay
 			Timer timer = new Timer();
 			timer.schedule(new TimerTask() {
